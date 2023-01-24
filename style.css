@@ -64,3 +64,13 @@ input::file-selector-button {
   transition: .3s;
   cursor: pointer;
 }
+
+.logoutBtn {
+  height: 50px;
+  width: 50px;
+}
+
+.buten {
+  height: 50px;
+  width: 50px;
+}
