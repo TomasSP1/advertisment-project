@@ -49,6 +49,11 @@ a:hover{
   transition: .3s;
 }
 
+.logoutBtn {
+  float: right;
+  margin: 10px;
+}
+
 
 input::file-selector-button {
     background: #da5767;
@@ -65,12 +70,4 @@ input::file-selector-button {
   cursor: pointer;
 }
 
-.logoutBtn {
-  height: 50px;
-  width: 50px;
-}
 
-.buten {
-  height: 50px;
-  width: 50px;
-}
