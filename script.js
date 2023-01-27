@@ -13,9 +13,9 @@ import { getAuth,
 
 
 import {firebaseConfig} from "./firebase.js"
-import { creatingRegForm, 
-        creatingADSform,
+import {creatingRegForm,
         creatingLogoutBtn
+        
         } from "./functions.js";
 
 
@@ -25,96 +25,68 @@ import { creatingRegForm,
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
 const database = getDatabase(app);
+
 
 
 const auth = getAuth();
 
 
 
-
-
-
-
-
-
 // userio statuso patikrinimas
 
 const user = auth.currentUser;
+
+const registrationContainer = document.querySelector('.registration-form-container');
+
 onAuthStateChanged(auth, (user) => {
-    const registrationContainer = document.querySelector('.registration-form-container');
-    const loguoutBtnContainer = document.querySelector('.logoutBtn-container');
+    
     if (user) {
         const uid = user.uid;
         console.log(user)
         console.log(user.uid)
         console.log('useris prisijunges')
-        registrationContainer.remove();
+
         creatingLogoutBtn();
-        const logoutBtn = document.querySelector('.logoutBtn');
-        console.log(logoutBtn);
-        logoutBtn.addEventListener('click', logOutBtnFunction);
-        
+
+        const logOutBtn = document.querySelector(".logoutBtn");
+        logOutBtn.addEventListener('click', logOutBtnFunction);
 
 
     } else {
-        loguoutBtnContainer.remove();
-        console.log('atsijunges');
+        
         creatingRegForm();
+
         const loginBtn = document.querySelector('.login-btn');
         const registerBtn = document.querySelector('.register-btn');
-        loginBtn.addEventListener('click', login);
-        registerBtn.addEventListener('click', register_user);
 
-
-    }
+        registerBtn.addEventListener('click', registerUserFunction);
+        loginBtn.addEventListener('click', loginBtnFunction);
+        
+    }      
 });
-
-
-
-
-
-
-
-
-
-
 
 
 
 
 // <<FUNCTIONS>>
 
-const login = (e)=> {
+const logOutBtnFunction = (e) => {
     e.preventDefault();
-    console.log('login mygtukas neveikia')
-    const email = document.getElementById('email').value;
-    const passwd = document.getElementById('password').value;
-    const registrationContainer = document.querySelector('.registration-form-container');
-    
-
-    signInWithEmailAndPassword(auth, email, passwd)
-    .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        console.log('sekmingai vartotojas prisijunge');
-        const loginTime = new Date();
-        update(ref(database, 'Users/' + user.uid), {
-            timestamp: `${loginTime}`
-        });
-        registrationContainer.remove();
-        // ...
-    })
-    .catch((error) => {
-        const errorCode = error.code;
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log("Signed out");
+      })
+      .catch((error) => {
+        // An error happened.
         const errorMessage = error.message;
-        console.log(errorMessage)
-    });
+        console.log(errorMessage);
+      });
 };
 
-
-
-const register_user = (e)=> {
+const registerUserFunction = (e)=> {
     e.preventDefault();
 
     const email = document.getElementById('email').value;
@@ -142,24 +114,22 @@ const register_user = (e)=> {
   });
 };
 
-const logOutBtnFunction = ()=> {
-    const logoutBtn = document.querySelector('.logoutBtn');
-    console.log('paspaudus logout sekmingai islogino')
-    logoutBtn.addEventListener('click', ()=> {
-        signOut(auth).then(() => {
-            // Sign-out successful.
-            console.log('signe out success')
-        }).catch((error) => {
-            // An error happened.
-            console.log(errorMessage)
+const loginBtnFunction = (e) => {
+        e.preventDefault();
+        const user_email = document.getElementById("email").value;
+        const user_pass = document.getElementById("password").value;
+        signInWithEmailAndPassword(auth, user_email, user_pass)
+          .then((userCredential) => {
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ...
         });
-
-    });
-}
+};
 
 
-
-// // <<EVENT LISTENERS>>
 
 
 

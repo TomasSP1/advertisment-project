@@ -51,8 +51,68 @@ a:hover{
 
 .logoutBtn {
   float: right;
-  margin: 10px;
+  margin: 15px;
+  color: #da5767;
+  font-size: 30px;
+  animation: bounce 2s ease-in-out infinite;
+  
 }
+
+.logoutBtn:hover {
+  cursor: pointer;
+  color:#df8c96;
+  transition: .3s;
+}
+
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 input::file-selector-button {
