@@ -3,7 +3,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebas
 import { getDatabase, 
         set, 
         ref, 
-        update } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+        update,
+        child,
+        get } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 import { getAuth, 
         createUserWithEmailAndPassword, 
         signInWithEmailAndPassword, 
@@ -130,8 +132,103 @@ const loginBtnFunction = (e) => {
 };
 
 
+const dbRef = ref(getDatabase());
+
+console.log(dbRef)
 
 
 
+let stdNo = 0;
+const tbody = document.querySelector('.tbody1');
+console.log(tbody)
+
+function AddItemToTable(email, role, date, key) {
+  
+  let trow = document.createElement('tr');
+  trow.setAttribute('data-id', key)
+  let td1 = document.createElement('td');
+  
+  
+  let td2 = document.createElement('td');
+  let td3 = document.createElement('td');
+  let td4 = document.createElement('td');
+  let td5 = document.createElement('td');
+  td5.classList.add('deleteUserBtn');
+
+  td1.innerHTML = ++stdNo;
+  td2.innerHTML = email;
+  td3.innerHTML = role;
+  td4.innerHTML = date;
+  td5.innerHTML = `<i class="fa-solid fa-square-minus"></i>`
+
+  trow.appendChild(td1);
+  trow.appendChild(td2);
+  trow.appendChild(td3);
+  trow.appendChild(td4);
+  trow.appendChild(td5);
+
+  tbody.appendChild(trow);
+}
+
+function AddAllItemsToTable(User) {
+  stdNo = 0;
+  tbody.innerHTML = "";
+  User.forEach(item => {
+    AddItemToTable(item.email, item.role, item.timestamp, item.key)
+    // console.log(user.key)
+  });
+}
+
+
+
+
+
+
+
+
+
+// const getInfoBtn = document.querySelector('.getInfoBtn');
+// getInfoBtn.addEventListener('click', ()=> {
+//   console.log(getInfoBtn);
+  get(child(dbRef, 'Users/')).then((snapshot) => {
+    if (snapshot.exists()) {
+      const users = [];
+      snapshot.forEach(childSnapshot => {
+        users.push(childSnapshot.val())
+      })
+      // console.log(snapshot)
+      // console.log(users)
+
+      // users.forEach(item => 
+      //   console.log(item.email, item.role, item.timestamp))
+      AddAllItemsToTable(users);
+
+      const deleteUserBtns = document.querySelectorAll('.deleteUserBtn');
+      
+      deleteUserBtns.forEach(btn => {
+        btn.addEventListener('click', ()=> {
+          console.log(btn.parentElement.getAttribute('data-id'));
+          get(child(dbRef, 'Users/')).then((snapshot) => {
+            snapshot.forEach(item => {
+              console.log(item.key)
+            })
+          })
+        })
+      })
+      
+        
+        
+
+      
+      
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+  
+
+  
 
 
