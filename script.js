@@ -5,7 +5,8 @@ import { getDatabase,
         ref, 
         update,
         child,
-        get } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+        get,
+        remove } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 import { getAuth, 
         createUserWithEmailAndPassword, 
         signInWithEmailAndPassword, 
@@ -146,8 +147,9 @@ function AddItemToTable(email, role, date, key) {
   
   let trow = document.createElement('tr');
   trow.setAttribute('data-id', key)
-  let td1 = document.createElement('td');
   
+  let td1 = document.createElement('td');
+
   
   let td2 = document.createElement('td');
   let td3 = document.createElement('td');
@@ -173,10 +175,10 @@ function AddItemToTable(email, role, date, key) {
 function AddAllItemsToTable(User) {
   stdNo = 0;
   tbody.innerHTML = "";
-  User.forEach(item => {
-    AddItemToTable(item.email, item.role, item.timestamp, item.key)
-    // console.log(user.key)
-  });
+
+    for (let i in User) {
+      AddItemToTable(User[i].email, User[i].role, User[i].timestamp, i);
+    }
 }
 
 
@@ -187,48 +189,48 @@ function AddAllItemsToTable(User) {
 
 
 
-// const getInfoBtn = document.querySelector('.getInfoBtn');
-// getInfoBtn.addEventListener('click', ()=> {
-//   console.log(getInfoBtn);
+
   get(child(dbRef, 'Users/')).then((snapshot) => {
-    if (snapshot.exists()) {
-      const users = [];
-      snapshot.forEach(childSnapshot => {
-        users.push(childSnapshot.val())
-      })
-      // console.log(snapshot)
-      // console.log(users)
+    
+  
+      const userData = snapshot.val();
+  
+      AddAllItemsToTable(userData);
 
-      // users.forEach(item => 
-      //   console.log(item.email, item.role, item.timestamp))
-      AddAllItemsToTable(users);
 
+      // selecting information delete button
       const deleteUserBtns = document.querySelectorAll('.deleteUserBtn');
-      
       deleteUserBtns.forEach(btn => {
         btn.addEventListener('click', ()=> {
-          console.log(btn.parentElement.getAttribute('data-id'));
-          get(child(dbRef, 'Users/')).then((snapshot) => {
-            snapshot.forEach(item => {
-              console.log(item.key)
+          const uniqueBtnID = btn.parentElement.getAttribute('data-id');
+          get(child(dbRef, `Users/${uniqueBtnID}`)).then((snapshot) => {
+            console.log(uniqueBtnID)
+            if (snapshot.exists()) {
+              remove(ref(database, `Users/${uniqueBtnID}`))
+              .then(()=> {
+                alert("Data deleted successfully")
+                window.location.reload();
+              })
+              .catch((error)=> {
+                alert(error);
+              });
+              } else {
+                console.log("No data available")
+              }
             })
+          
           })
         })
-      })
-      
+  });  
+  
         
         
-
+ 
       
       
-    } else {
-      console.log("No data available");
-    }
-  }).catch((error) => {
-    console.error(error);
-  });
+  
   
 
-  
+
 
 
