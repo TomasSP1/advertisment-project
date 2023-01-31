@@ -77,9 +77,43 @@ a:hover{
   }
 }
 
+.deleteUserBtn, .delCategoryBtn {
+  color: #da5767;
+  text-align: center;
+}
+.deleteUserBtn:hover {
+  cursor: pointer;
+}
+.delCategoryBtn:hover {
+  cursor: pointer;
+}
+
+.userDeleteIcon {
+  text-align: center;
+}
+
+/* .categories-input-container {
+  height: 90px;
+  display: flex;
+  align-items: center;
+} */
+
+.enterCategoryBtn {
+  float: right;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
 
 /* fake button */
-.infoBtnContainer {
+/* .infoBtnContainer {
   display: flex;
   justify-content: center;
   margin-top: 30px;
@@ -93,7 +127,7 @@ a:hover{
   color: #da5767;
   color: white;
   border-radius: 5px;
-}
+} */
 
 
 

@@ -6,7 +6,8 @@ import { getDatabase,
         update,
         child,
         get,
-        remove } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+        remove,
+        onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 import { getAuth, 
         createUserWithEmailAndPassword, 
         signInWithEmailAndPassword, 
@@ -135,13 +136,9 @@ const loginBtnFunction = (e) => {
 
 const dbRef = ref(getDatabase());
 
-console.log(dbRef)
-
-
-
 let stdNo = 0;
-const tbody = document.querySelector('.tbody1');
-console.log(tbody)
+const tbody1 = document.querySelector('.tbody1');
+console.log(tbody1)
 
 function AddItemToTable(email, role, date, key) {
   
@@ -149,11 +146,14 @@ function AddItemToTable(email, role, date, key) {
   trow.setAttribute('data-id', key)
   
   let td1 = document.createElement('td');
-
+  td1.classList.add('text-center');
   
   let td2 = document.createElement('td');
+  td2.classList.add('text-center');
   let td3 = document.createElement('td');
+  td3.classList.add('text-center');
   let td4 = document.createElement('td');
+  td4.classList.add('text-center');
   let td5 = document.createElement('td');
   td5.classList.add('deleteUserBtn');
 
@@ -169,12 +169,12 @@ function AddItemToTable(email, role, date, key) {
   trow.appendChild(td4);
   trow.appendChild(td5);
 
-  tbody.appendChild(trow);
+  tbody1.appendChild(trow);
 }
 
 function AddAllItemsToTable(User) {
   stdNo = 0;
-  tbody.innerHTML = "";
+  tbody1.innerHTML = "";
 
     for (let i in User) {
       AddItemToTable(User[i].email, User[i].role, User[i].timestamp, i);
@@ -185,11 +185,7 @@ function AddAllItemsToTable(User) {
 
 
 
-
-
-
-
-
+// sita dalis atspausdina lentele su Userio duomenimis, taip pat leidzia trinti tiek is firebase tiek is lenteles
   get(child(dbRef, 'Users/')).then((snapshot) => {
     
   
@@ -221,16 +217,100 @@ function AddAllItemsToTable(User) {
           
           })
         })
-  });  
+  });
   
+
+
+
         
-        
+ const categoryBtn = document.querySelector('.enterCategoryBtn');
+ const categoryInput = document.querySelector('.category-input');
  
-      
-      
+ 
+// saving category data to firebase
+
+categoryBtn.addEventListener('click', ()=> {
+  console.log('paspaudziau')
+  set(ref(database, 'categories/' + categoryInput.value), {
+    category: categoryInput.value
+  })
+  .then(()=> {
+    alert("Data added successfully")
+  })
+  .catch((error)=> {
+    alert(error)
+  })
+});
+
+
+// making functions to build catgeory tables from firebase
+let catNo = 0;
+const tbody2 = document.querySelector('.tbody2');
+
+function AddCategoryToTable(category, key) {
+  let trow = document.createElement('tr');
+  trow.setAttribute('data-id', key);
+
+  let td1 = document.createElement('td');
+  td1.classList.add('text-center');
+
+  let td2 = document.createElement('td');
+  td2.classList.add('text-center');
+
+  let td5 = document.createElement('td');
+  td5.classList.add('delCategoryBtn');
+
+  td1.innerHTML = ++catNo;
+  td2.innerHTML = category;
+  td5.innerHTML = `<i class="fa-solid fa-square-minus"></i>`
   
+  trow.appendChild(td1);
+  trow.appendChild(td2);
+  trow.appendChild(td5);
+
+  tbody2.appendChild(trow);
+
+}
+
+function AddAllItemsToCategoryTable(categories) {
+  catNo = 0;
+  tbody2.innerHTML = "";
+
+    for (let i in categories) {
+      AddCategoryToTable(categories[i].category, i);
+    }
+}  
+
+
+get(child(dbRef, 'categories/')).then((snapshot) => {
+    
   
+  const userData = snapshot.val();
+  console.log(userData)
 
-
-
+  AddAllItemsToCategoryTable(userData);
+  
+  // deleting category from firebase
+  const delCategoryBtns = document.querySelectorAll('.delCategoryBtn');
+  delCategoryBtns.forEach(btn => {
+    btn.addEventListener('click', ()=> {
+      const uniqueBtnID = btn.parentElement.getAttribute('data-id');
+      get(child(dbRef, `categories/${uniqueBtnID}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+            remove(ref(database, `categories/${uniqueBtnID}`))
+            .then(()=> {
+              alert("Data deleted successfully")
+              window.location.reload();
+            })
+            .catch((error)=> {
+              alert(error);
+            });
+            } else {
+              console.log("No data available")
+            }
+          })
+        
+        })
+      })
+});
 
