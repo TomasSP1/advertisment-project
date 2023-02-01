@@ -49,6 +49,11 @@ a:hover{
   transition: .3s;
 }
 
+.logoutBtnContainer {
+  /* background-color: #333; */
+  height: 50px;
+}
+
 .logoutBtn {
   float: right;
   margin: 15px;
@@ -118,7 +123,6 @@ a:hover{
   justify-content: center;
   margin-top: 30px;
 }
-
 .getInfoBtn {
   padding: 0.6rem 1.2rem;
   background: #da5767;
@@ -128,6 +132,55 @@ a:hover{
   color: white;
   border-radius: 5px;
 } */
+
+
+
+
+input::file-selector-button {
+    background: #da5767;
+    border: 2px solid #da5767;
+    border-radius: 8px;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    
+}
+  input::file-selector-button:hover {
+  background-color: #df8c96;
+  border-color: #df8c96;
+  transition: .3s;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
