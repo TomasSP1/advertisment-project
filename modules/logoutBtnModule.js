@@ -15,21 +15,25 @@ const auth = getAuth();
 const creatingLogoutBtn = ()=> {
     const logoutBtnContainer = document.querySelector('.logoutBtnContainer');
     logoutBtnContainer.innerHTML = `<i class="fa-solid fa-right-from-bracket logoutBtn"></i>`;
+
+    const logOutBtnFunction = (e) => {
+      e.preventDefault();
+      
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+          console.log("Signed out");
+        })
+        .catch((error) => {
+          // An error happened.
+          const errorMessage = error.message;
+          console.log(errorMessage);
+        });
+    };
+
+    const logOutBtn = document.querySelector(".logoutBtn");
+    logOutBtn.addEventListener('click', logOutBtnFunction);
 };
 
-const logOutBtnFunction = (e) => {
-    e.preventDefault();
-    console.log('mygtukas vekia')
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        console.log("Signed out");
-      })
-      .catch((error) => {
-        // An error happened.
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
-};
 
-export {creatingLogoutBtn, logOutBtnFunction}
+export {creatingLogoutBtn}

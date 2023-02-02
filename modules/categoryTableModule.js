@@ -19,7 +19,7 @@ let catNo = 0;
 
 function categoryTableHeader() {
     const categoryContainer = document.querySelector('.categoryContainer');
-    categoryContainer.innerHTML = `<div class="container table-container my-5">
+    categoryContainer.innerHTML = `<div class="container table-container my-5 card">
     <h2>Categories:</h2>
     <table class="table table-bordered table-hover category-table">
         <thead>

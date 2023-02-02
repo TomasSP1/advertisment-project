@@ -18,7 +18,7 @@ let userNr = 0;
 function userTableHeader() {
     const userTableContainer = document.querySelector('.userTableContainer');
 
-    userTableContainer.innerHTML = `<div class="container table-container my-5">
+    userTableContainer.innerHTML = `<div class="container table-container my-5 card">
                                     <h2>Users:</h2>
                                     <table class="table table-bordered table-hover user-table">
                                         <thead>

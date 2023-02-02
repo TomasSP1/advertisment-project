@@ -19,11 +19,14 @@ import { getAuth,
 import {firebaseConfig} from "./firebase.js"
 
 
-import {creatingRegForm, loginBtnFunction, registerUserFunction} from "./modules/regFormModule.js";
-import {creatingLogoutBtn, logOutBtnFunction} from "./modules/logoutBtnModule.js"       
+import {creatingRegForm} from "./modules/regFormModule.js";
+import {creatingLogoutBtn} from "./modules/logoutBtnModule.js"       
 import {userTable} from "./modules/userTableModule.js";
 import {categoryTable} from "./modules/categoryTableModule.js";
-import {logoutCleanPage, cleanAllTables} from "./modules/cleanPageModule.js";
+import {logoutCleanPage, cleanAllTables, cleanRegForm} from "./modules/cleanPageModule.js";
+import {userRoleIdentifikcation} from "./modules/roleIdentificationModule.js";
+import {creatingAdsForm} from "./modules/ADSregForm.js";
+import {adsContainers} from "./modules/AdsFormTable.js";
 
 
 
@@ -38,33 +41,32 @@ const user = auth.currentUser;
 
 
 onAuthStateChanged(auth, (user) => {
-  
+    
   if (user) {
-        const uid = user.uid;
-        console.log(user)
-        console.log(user.uid)
-        console.log('useris prisijunges')
-        cleanAllTables();
-        creatingLogoutBtn();
 
-        const logOutBtn = document.querySelector(".logoutBtn");
-        logOutBtn.addEventListener('click', logOutBtnFunction);
+        userRoleIdentifikcation().then(data => {
 
-        userTable();
+            if (data === 'admin') {
+                console.log('admin log in')
+                cleanRegForm();
+                creatingLogoutBtn();
+                userTable();
+                categoryTable();
 
-        categoryTable();
-
+            } else {
+                console.log('simple user log in');
+                cleanRegForm();
+                cleanAllTables();
+                creatingLogoutBtn();
+                creatingAdsForm();
+                // adsTable();
+                adsContainers();
+            }
+        });
     } else {
 
         logoutCleanPage();
-        
         creatingRegForm();
-
-        const loginBtn = document.querySelector('.login-btn');
-        const registerBtn = document.querySelector('.register-btn');
-
-        registerBtn.addEventListener('click', registerUserFunction);
-        loginBtn.addEventListener('click', loginBtnFunction);
         
     }      
 });

@@ -39,50 +39,60 @@ const creatingRegForm = () => {
             </div>
         </div>
     </div>`
-};
 
-const loginBtnFunction = (e) => {
-    e.preventDefault();
-    const user_email = document.getElementById("email").value;
-    const user_pass = document.getElementById("password").value;
-    console.log('spaudziu mygtuka')
-    signInWithEmailAndPassword(auth, user_email, user_pass)
-      .then((userCredential) => {
+    const loginBtnFunction = (e) => {
+        e.preventDefault();
+        const user_email = document.getElementById("email").value;
+        const user_pass = document.getElementById("password").value;
+        
+        signInWithEmailAndPassword(auth, user_email, user_pass)
+          .then((userCredential) => {
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ...
+        });
+    };
+
+    const registerUserFunction = (e)=> {
+        e.preventDefault();
+    
+        const email = document.getElementById('email').value;
+        const passwd = document.getElementById('password').value;
+    
+        createUserWithEmailAndPassword(auth, email, passwd)
+        .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(`new user created ${user}`)
+    
+        const loginTime = new Date();
+        set(ref(database, 'Users/' + user.uid), {
+            email: email,
+            role: 'simple_user',
+            timestamp: `${loginTime}`
+          });
         // ...
-      })
-      .catch((error) => {
+        })
+        .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // ...
-    });
-};
-
-const registerUserFunction = (e)=> {
-    e.preventDefault();
-
-    const email = document.getElementById('email').value;
-    const passwd = document.getElementById('password').value;
-
-    createUserWithEmailAndPassword(auth, email, passwd)
-    .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    console.log(`new user created ${user}`)
-
-    const loginTime = new Date();
-    set(ref(database, 'Users/' + user.uid), {
-        email: email,
-        role: 'simple_user',
-        timestamp: `${loginTime}`
+        // ..
+        console.log(errorMessage)
       });
-    // ...
-    })
-    .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-    console.log(errorMessage)
-  });
+    };
+
+    const loginBtn = document.querySelector('.login-btn');
+    const registerBtn = document.querySelector('.register-btn');
+
+    registerBtn.addEventListener('click', registerUserFunction);
+    loginBtn.addEventListener('click', loginBtnFunction);
 };
 
-export {creatingRegForm, loginBtnFunction, registerUserFunction}
+
+
+
+
+export {creatingRegForm}
