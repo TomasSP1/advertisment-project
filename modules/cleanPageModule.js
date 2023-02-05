@@ -8,13 +8,13 @@ function logoutCleanPage() {
     const userTableContainer = document.querySelector('.userTableContainer');
     const categoryContainer = document.querySelector('.categoryContainer');
     const mainAdsFormContainer = document.querySelector('.mainAdsFormContainer');
-    const adsTableContainer = document.querySelector('.adsTableContainer');
+    const adsMainContainer = document.querySelector('.adsContainer');
 
     logoutBtnContainer.innerHTML = '';
     userTableContainer.innerHTML = '';
     categoryContainer.innerHTML = '';
     mainAdsFormContainer.innerHTML = '';
-    adsTableContainer.innerHTML = '';
+    adsMainContainer.innerHTML = '';
 };
 
 function cleanRegForm() {

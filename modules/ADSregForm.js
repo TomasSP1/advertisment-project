@@ -16,10 +16,10 @@ const auth = getAuth();
 function creatingAdsForm() {
     const mainAdsFormContainer = document.querySelector('.mainAdsFormContainer');
     mainAdsFormContainer.innerHTML = `
-                                <div class="row justify-content-center">
+                                <div class="row d-flex justify-content-center">
                                     <div class="col-md-5">
                                         <div class="card">
-                                            <h2 class="card-title text-center">Registration form</h2>
+                                            <h2 class="card-title text-center">Ads form</h2>
                                             <div class="card-body py-md-4">
                                                 <form>
                                                     <div class="form-group">
@@ -42,6 +42,7 @@ function creatingAdsForm() {
                                                     </div>
                                                     <div class="d-flex flex-row align-items-center justify-content-between">
                                                         <button class="btn btn-primary" id="uploadAdsBtn">Upload</button>
+                                                        <button class="btn btn-primary" id="nextuploadAdsBtn">Update</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -64,7 +65,7 @@ function creatingAdsForm() {
         };
     });
 
-    const adsNameInput = document.getElementById('ads-name');
+                const adsNameInput = document.getElementById('ads-name');
                 
                 const adsSelectInput = document.getElementById('form-selection');
                 const adsTextareaInput = document.getElementById('ads-about');
@@ -82,7 +83,8 @@ function creatingAdsForm() {
                         category: adsSelectInput.value,
                         text: adsTextareaInput.value,
                         price: adsPriceInput.value,
-                        picture: adsPictureInput.value
+                        picture: adsPictureInput.value,
+                        userID: user.uid
                       })
                       .then(()=> {
                         alert("Data added successfully")

@@ -26,7 +26,7 @@ import {categoryTable} from "./modules/categoryTableModule.js";
 import {logoutCleanPage, cleanAllTables, cleanRegForm} from "./modules/cleanPageModule.js";
 import {userRoleIdentifikcation} from "./modules/roleIdentificationModule.js";
 import {creatingAdsForm} from "./modules/ADSregForm.js";
-import {adsContainers} from "./modules/AdsFormTable.js";
+import {adsTableCreation} from "./modules/AdsTableCreationModule.js";
 
 
 
@@ -43,7 +43,11 @@ const user = auth.currentUser;
 onAuthStateChanged(auth, (user) => {
     
   if (user) {
+        
+        logoutCleanPage();
 
+        adsTableCreation(user.uid);
+        
         userRoleIdentifikcation().then(data => {
 
             if (data === 'admin') {
@@ -52,6 +56,7 @@ onAuthStateChanged(auth, (user) => {
                 creatingLogoutBtn();
                 userTable();
                 categoryTable();
+                // adsContainers();
 
             } else {
                 console.log('simple user log in');
@@ -59,12 +64,13 @@ onAuthStateChanged(auth, (user) => {
                 cleanAllTables();
                 creatingLogoutBtn();
                 creatingAdsForm();
-                // adsTable();
-                adsContainers();
+                
+    
+                
+                
             }
         });
     } else {
-
         logoutCleanPage();
         creatingRegForm();
         
