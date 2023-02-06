@@ -90,7 +90,7 @@ function adsTableCreation(userID) {
 
             // update buttons
             const updateAdsBtns = document.querySelectorAll('.updateAdsBtn');
-            console.log(updateAdsBtns);
+            
             updateAdsBtns.forEach(btn => {
                 btn.addEventListener('click', ()=> {
                     const uploadAdsBtn = document.getElementById('uploadAdsBtn');
@@ -99,7 +99,7 @@ function adsTableCreation(userID) {
                     nextUploadAdsBtn.style.display = 'block';
                     const uniqueAdsBtnID = btn.parentElement.parentElement.getAttribute('data-id');
                     get(ref(database, `ads/${uniqueAdsBtnID}`)).then((snapshot) => {
-                        console.log(snapshot.val())
+                        
                         const adsData = snapshot.val();
                         const adsNameInput = document.getElementById('ads-name');
                         adsNameInput.value = adsData.name;
@@ -111,7 +111,7 @@ function adsTableCreation(userID) {
                         adsPictureInput.value = adsData.picture;
                         const adsSelectInput = document.getElementById('form-selection');
                         adsSelectInput.value = adsData.category;
-                        console.log(nextUploadAdsBtn)
+                        
                         nextUploadAdsBtn.addEventListener('click', (e)=> {
                             e.preventDefault();
                             update(ref(database, `ads/${uniqueAdsBtnID}`), {
@@ -130,6 +130,35 @@ function adsTableCreation(userID) {
                             })
                         })
                         
+                    })
+                })
+            })
+
+            // modal wil start here
+            const modalContainer = document.querySelector('.modal-container');
+            console.log(modalContainer)
+            const commentsModal = document.createElement('div');
+            commentsModal.classList.add('commentsModal');
+            console.log(commentsModal)
+            modalContainer.appendChild(commentsModal);
+            const commentBtns = document.querySelectorAll('.commentBtn');
+            const modal = document.querySelector('.modal-overlay');
+            const closeBtn = document.querySelector('.close-btn');
+            commentBtns.forEach(btn => {
+                btn.addEventListener('click', ()=> {
+                    modal.classList.add('open-modal');
+                })
+                closeBtn.addEventListener('click', () => {
+                    modal.classList.remove('open-modal');
+
+                    // kad bet kur paspaudus uzsidarytu modalas
+                    window.addEventListener('click', function(e) {
+                        console.log(e.target)
+                        console.log(modalContainer)
+                    
+                        if (e.target === modal) {
+                            modal.classList.remove('open-modal');
+                        }
                     })
                 })
             })

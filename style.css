@@ -258,7 +258,70 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 }
 
 
+/* modal */
+/* .modal-container {
+  height: 600px;
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  z-index: 999;
+  display: block;
+}
 
+.commentsModal {
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  border: 0.40rem solid #f8f9fa;
+} */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(82, 87, 90, 0.5);
+  display: grid;
+  place-items: center;
+  /* transition: all 0.3s linear; */
+  visibility: hidden;
+  z-index: -10;
+  
+}
+/* OPEN/CLOSE MODAL */
+.open-modal {
+  visibility: visible;
+  z-index: 999;
+}
+.modal-container {
+  background: #fff;
+  border: 0.40rem solid #f8f9fa;
+  width: 90vw;
+  height: 30vh;
+  max-width: 620px;;
+  text-align: center;
+  display: grid;
+  place-items: center;
+  position: relative;
+  border-radius: 5px;
+}
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  background: transparent;
+  border-color: transparent;
+  color: #da5767;
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+.close-btn:hover {
+  color: #df8c96;
+  transform: scale(1.3);
+}
 
 
 
