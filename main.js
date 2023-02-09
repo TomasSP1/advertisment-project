@@ -56,6 +56,7 @@ onAuthStateChanged(auth, (user) => {
                 creatingLogoutBtn();
                 userTable();
                 categoryTable();
+                creatingAdsForm();
                 // adsContainers();
 
             } else {
