@@ -26,7 +26,7 @@ function adsTableCreation(userID) {
                             <div class="card photo-card" data-id=${j} style="width: 18rem;">
                                 <div class="photo-container">
                                     <img class="card-img-top" src=${adsData[j].picture} alt=${adsData[j].name}>
-                                    <i class="fa-regular fa-star favoriteBtn"></i>
+                                    <i class="fa-regular fa-star favoriteBtn" data-id=${j}></i>
                                     <i class="fa-solid fa-square-minus adsDelI deleteAdsBtn"></i>
                                     <i class="fa-solid fa-square-pen adsUpdateI updateAdsBtn"></i>
                                     <i class="fa-solid fa-comment-dots commentBtn"></i>
@@ -45,7 +45,7 @@ function adsTableCreation(userID) {
                             <div class="card photo-card" data-id=${j} style="width: 18rem;">
                                 <div class="photo-container">
                                     <img class="card-img-top" src=${adsData[j].picture} alt=${adsData[j].name}>
-                                    <i class="fa-regular fa-star favoriteBtn"></i>
+                                    <i class="fa-regular fa-star favoriteBtn" data-id=${j}></i>
                                     <i class="fa-solid fa-square-minus adsDelI"></i>
                                     <i class="fa-solid fa-square-pen adsUpdateI"></i>
                                     <i class="fa-solid fa-comment-dots commentBtn"></i>
@@ -138,24 +138,67 @@ function adsTableCreation(userID) {
 
 
             // // fovoriteBtn
-            // const favoriteBtns = document.querySelectorAll('.favoriteBtn');
-            // console.log(favoriteBtns)
-            // favoriteBtns.forEach(btn => {
-            //     btn.addEventListener('click', ()=> {
-            //         console.log(uniquecommentBtnID)
-            //         set(push(ref(database, 'favorites/')), {
-            //             adsID: uniquecommentBtnID,
-            //             userID: userID,
-            //             })
-            //             .then(()=> {
-            //                 alert("Data added successfully")
-            //                 window.location.reload();
-            //             })
-            //             .catch((error)=> {
-            //                 alert(error)
-            //         })
-            //     })
-            // })
+            const favoriteBtns = document.querySelectorAll('.favoriteBtn');
+            console.log(favoriteBtns)
+            favoriteBtns.forEach(btn => {
+                btn.addEventListener('click', ()=> {
+                    
+                    const adsUniqueID = btn.getAttribute('data-id');
+
+                    console.log(adsUniqueID)
+                    
+                    
+                    
+                    
+                        get(ref(database, `favorites/${adsUniqueID}`)).then((snapshot) => {
+
+                            console.log(snapshot)
+                            if (snapshot.exists()) {
+                                remove(ref(database, `favorites/${adsUniqueID}`))
+                                .then(()=> {
+                                alert("Data deleted successfully")
+                                window.location.reload();
+                                })
+                                .catch((error)=> {
+                                alert(error);
+                                });
+                                } else {
+                                    set(push(ref(database, `favorites/${adsUniqueID}`)), {
+                                        // adsID: adsUniqueID,
+                                        userID: userID
+                                        })
+                                        .then(()=> {
+                                            alert("Data added successfully")
+                                            window.location.reload();
+                                        })
+                                        .catch((error)=> {
+                                            alert(error)
+                                    })
+                                }
+                            })
+                        
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                    
+
+
+
+                })
+            })
 
 
 
