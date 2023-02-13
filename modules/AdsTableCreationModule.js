@@ -19,244 +19,204 @@ function adsTableCreation(userID) {
             const adsData = snapshot.val();
             get(ref(database, 'Users/' + userID)).then((userSnapshot) => {
                 const userData = userSnapshot.val();
+                get(ref(database, `favorites/`)).then((favoriteSnapshot) => {
+                    console.log(favoriteSnapshot.val())
+                    const favoritesData = favoriteSnapshot.val();
+
+                    
                 
-                for (let j in adsData) {
-                    if (userID === adsData[j].userID || userData.role === 'admin') {
-                        adsMainContainer.innerHTML += `
-                            <div class="card photo-card" data-id=${j} style="width: 18rem;">
-                                <div class="photo-container">
-                                    <img class="card-img-top" src=${adsData[j].picture} alt=${adsData[j].name}>
-                                    <i class="fa-regular fa-star favoriteBtn" data-id=${j}></i>
-                                    <i class="fa-solid fa-square-minus adsDelI deleteAdsBtn"></i>
-                                    <i class="fa-solid fa-square-pen adsUpdateI updateAdsBtn"></i>
-                                    <i class="fa-solid fa-comment-dots commentBtn"></i>
-                                </div>
-                                <div class="card-body">
-                                    <h3 class="card-title photo-title">${adsData[j].name}</h3>
-                                    <h5 class="card-title">${adsData[j].category}</h5>
-                                    <p class="card-text">${adsData[j].text}</p>
-                                </div>
-                                <div class="price-container">
-                                    <div class="price">${adsData[j].price}$</div>
-                                </div>
-                            </div>`
-                    } else {
-                        adsMainContainer.innerHTML += `
-                            <div class="card photo-card" data-id=${j} style="width: 18rem;">
-                                <div class="photo-container">
-                                    <img class="card-img-top" src=${adsData[j].picture} alt=${adsData[j].name}>
-                                    <i class="fa-regular fa-star favoriteBtn" data-id=${j}></i>
-                                    <i class="fa-solid fa-square-minus adsDelI"></i>
-                                    <i class="fa-solid fa-square-pen adsUpdateI"></i>
-                                    <i class="fa-solid fa-comment-dots commentBtn"></i>
+                    for (let j in adsData) {
+                        let isFavorited = !!favoritesData[j+userID]; //du sauktukai pavercia booleanu verte kad vbeliau galetum kaip booleane ir naudoti
+                        //objekte favoritesData[viduje patikrinam ar objektas turi tokia reiksme ar ne]
+                        //jeigu objektas neturi reiksmes grazina undefined jeigu turi garzina ta reiksme, atitinkamai paverciam i boolean, jeigu
+                        //undefined tai false jeigu reiksme grazina tada true
+                        let isOwnerOrAdmin = (userID === adsData[j].userID || userData.role === 'admin');
+                        
+                        // for (let f in favoritesData) {
+                        //     console.log(f)
+                        //     if (f === j+userID) {
+                        //         isFavorited = true;
+                        //         break;
+                        //     }
+                        // }
+                            adsMainContainer.innerHTML += `
+                                <div class="card photo-card" data-id=${j} style="width: 18rem;">
+                                    <div class="photo-container">
+                                        <img class="card-img-top" src=${adsData[j].picture} alt=${adsData[j].name}>
+                                        <i class="${isFavorited ? 'fa-solid' : 'fa-regular'} fa-star favoriteBtn" data-id=${j}></i>
+                                        <i class="fa-solid fa-square-minus adsDelI ${isOwnerOrAdmin ? 'deleteAdsBtn' : ''}"></i>
+                                        <i class="fa-solid fa-square-pen adsUpdateI ${isOwnerOrAdmin ? 'updateAdsBtn' : ''}"></i>
+                                        <i class="fa-solid fa-comment-dots commentBtn"></i>
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="card-title photo-title">${adsData[j].name}</h3>
+                                        <h5 class="card-title">${adsData[j].category}</h5>
+                                        <p class="card-text">${adsData[j].text}</p>
+                                    </div>
+                                    <div class="price-container">
+                                        <div class="price">${adsData[j].price}$</div>
+                                    </div>
+                                </div>`
+                        
+                    }
+
+
+                                        // function delAdsBtnsFunction() {
+                                        // deleting ads from firebase
+                                        const delAdsBtns = document.querySelectorAll('.deleteAdsBtn');
+
+                                        delAdsBtns.forEach(btn => {
+                                        btn.addEventListener('click', ()=> {
+                                            const uniqueAdsBtnID = btn.parentElement.parentElement.getAttribute('data-id');
+                                            get(ref(database, `ads/${uniqueAdsBtnID}`)).then((snapshot) => {
+                                            if (snapshot.exists()) {
+                                                remove(ref(database, `ads/${uniqueAdsBtnID}`))
+                                                .then(()=> {
+                                                    alert("Data deleted successfully")
+                                                    window.location.reload();
+                                                })
+                                                .catch((error)=> {
+                                                    alert(error);
+                                                });
+                                                } else {
+                                                    console.log("No data available")
+                                                }
+                                                })
+                                            
+                                            })
+                                        })
+
+
+                                        // update buttons
+                                        const updateAdsBtns = document.querySelectorAll('.updateAdsBtn');
+                                        
+                                        updateAdsBtns.forEach(btn => {
+                                            btn.addEventListener('click', ()=> {
+                                                const uploadAdsBtn = document.getElementById('uploadAdsBtn');
+                                                const nextUploadAdsBtn = document.getElementById('nextuploadAdsBtn');
+                                                uploadAdsBtn.style.display = 'none';
+                                                nextUploadAdsBtn.style.display = 'block';
+                                                const uniqueAdsBtnID = btn.parentElement.parentElement.getAttribute('data-id');
+                                                get(ref(database, `ads/${uniqueAdsBtnID}`)).then((snapshot) => {
+                                                    
+                                                    const adsData = snapshot.val();
+                                                    const adsNameInput = document.getElementById('ads-name');
+                                                    adsNameInput.value = adsData.name;
+                                                    const adsTextareaInput = document.getElementById('ads-about');
+                                                    adsTextareaInput.value = adsData.text;
+                                                    const adsPriceInput = document.getElementById('price');
+                                                    adsPriceInput.value = adsData.price;
+                                                    const adsPictureInput = document.getElementById('picture-name');
+                                                    adsPictureInput.value = adsData.picture;
+                                                    const adsSelectInput = document.getElementById('form-selection');
+                                                    adsSelectInput.value = adsData.category;
+                                                    
+                                                    nextUploadAdsBtn.addEventListener('click', (e)=> {
+                                                        e.preventDefault();
+                                                        update(ref(database, `ads/${uniqueAdsBtnID}`), {
+                                                            name: adsNameInput.value,
+                                                            category: adsSelectInput.value,
+                                                            text: adsTextareaInput.value,
+                                                            price: adsPriceInput.value,
+                                                            picture: adsPictureInput.value
+                                                        })
+                                                        .then(()=> {
+                                                            alert("Data updated successfully");
+                                                            window.location.reload();
+                                                        })
+                                                        .catch((error)=> {
+                                                            alert(error)
+                                                        })
+                                                    })
+                                                })
+                                            })
+                                        })
+
+
+                                        // // fovoriteBtn
+                                        const favoriteBtns = document.querySelectorAll('.favoriteBtn');
+                                        console.log(favoriteBtns)
+                                        favoriteBtns.forEach(btn => {
+                                            btn.addEventListener('click', ()=> {
+                                                
+                                                const adsUniqueID = btn.getAttribute('data-id');
+
+                                                get(ref(database, `favorites/${adsUniqueID}${userID}`)).then((snapshot) => {
+                                                   
+                                                    if (snapshot.exists()) {
+                                                        remove(ref(database, `favorites/${adsUniqueID}${userID}`))
+                                                        .then(()=> {
+                                                        
+                                                        btn.classList.remove('fa-solid');
+                                                        btn.classList.add('fa-regular');
+                                                        
+                                                        })
+                                                        .catch((error)=> {
+                                                        alert(error);
+                                                        });
+                                                        } else {
+                                                            set(push(ref(database, `favorites/${adsUniqueID}${userID}`)), {
+                                                                // adsID: adsUniqueID,
+                                                                userID: userID
+                                                                })
+                                                                .then(()=> {
+                                                                    
+                                                                    btn.classList.remove('fa-regular');
+                                                                    btn.classList.add('fa-solid');
+                                                                    
+                                                                })
+                                                                .catch((error)=> {
+                                                                    alert(error)
+                                                            })
+                                                        }
+                                                })
+                                            })
+                                        })
+
+
+
+
+                                        // modal wil start here
+                                        const modalContainer = document.querySelector('.modal-container');
+                                        
+                                        const commentsModal = document.createElement('div');
+                                        commentsModal.classList.add('commentsModal');
                                     
-                                </div>
-                                <div class="card-body">
-                                    <h3 class="card-title photo-title">${adsData[j].name}</h3>
-                                    <h5 class="card-title">${adsData[j].category}</h5>
-                                    <p class="card-text">${adsData[j].text}</p>
-                                </div>
-                                <div class="price-container">
-                                    <div class="price">${adsData[j].price}$</div>
-                                </div>
-                            </div>`
-                };
-                
-            }
+                                        modalContainer.appendChild(commentsModal);
+                                        const commentBtns = document.querySelectorAll('.commentBtn');
+                                        const modal = document.querySelector('.modal-overlay');
+                                        // const closeBtn = document.querySelector('.close-btn');
+                                        commentBtns.forEach(btn => {
+                                            btn.addEventListener('click', ()=> {
+                                                
+                                                modal.classList.add('open-modal');
+                                                
+                                                const uniquecommentBtnID = btn.parentElement.parentElement.getAttribute('data-id');
+                                                addCommentsHeader(uniquecommentBtnID, userID);
 
-            // function delAdsBtnsFunction() {
-            // deleting ads from firebase
-            const delAdsBtns = document.querySelectorAll('.deleteAdsBtn');
+                                                // modalo veikimas kai jis atsidaro
+                                                const commentBtn = document.getElementById('commentBtn');
+                                                const commentInput = document.getElementById('commentInput');
 
-            delAdsBtns.forEach(btn => {
-            btn.addEventListener('click', ()=> {
-                const uniqueAdsBtnID = btn.parentElement.parentElement.getAttribute('data-id');
-                get(ref(database, `ads/${uniqueAdsBtnID}`)).then((snapshot) => {
-                  if (snapshot.exists()) {
-                      remove(ref(database, `ads/${uniqueAdsBtnID}`))
-                      .then(()=> {
-                        alert("Data deleted successfully")
-                        window.location.reload();
-                      })
-                      .catch((error)=> {
-                        alert(error);
-                      });
-                      } else {
-                        console.log("No data available")
-                      }
-                    })
-                
-                })
-            })
-
-
-            // update buttons
-            const updateAdsBtns = document.querySelectorAll('.updateAdsBtn');
-            
-            updateAdsBtns.forEach(btn => {
-                btn.addEventListener('click', ()=> {
-                    const uploadAdsBtn = document.getElementById('uploadAdsBtn');
-                    const nextUploadAdsBtn = document.getElementById('nextuploadAdsBtn');
-                    uploadAdsBtn.style.display = 'none';
-                    nextUploadAdsBtn.style.display = 'block';
-                    const uniqueAdsBtnID = btn.parentElement.parentElement.getAttribute('data-id');
-                    get(ref(database, `ads/${uniqueAdsBtnID}`)).then((snapshot) => {
-                        
-                        const adsData = snapshot.val();
-                        const adsNameInput = document.getElementById('ads-name');
-                        adsNameInput.value = adsData.name;
-                        const adsTextareaInput = document.getElementById('ads-about');
-                        adsTextareaInput.value = adsData.text;
-                        const adsPriceInput = document.getElementById('price');
-                        adsPriceInput.value = adsData.price;
-                        const adsPictureInput = document.getElementById('picture-name');
-                        adsPictureInput.value = adsData.picture;
-                        const adsSelectInput = document.getElementById('form-selection');
-                        adsSelectInput.value = adsData.category;
-                        
-                        nextUploadAdsBtn.addEventListener('click', (e)=> {
-                            e.preventDefault();
-                            update(ref(database, `ads/${uniqueAdsBtnID}`), {
-                                name: adsNameInput.value,
-                                category: adsSelectInput.value,
-                                text: adsTextareaInput.value,
-                                price: adsPriceInput.value,
-                                picture: adsPictureInput.value
-                            })
-                            .then(()=> {
-                                alert("Data updated successfully");
-                                window.location.reload();
-                            })
-                            .catch((error)=> {
-                                alert(error)
-                            })
-                        })
-                        
-                    })
-                })
-            })
-
-
-            // // fovoriteBtn
-            const favoriteBtns = document.querySelectorAll('.favoriteBtn');
-            console.log(favoriteBtns)
-            favoriteBtns.forEach(btn => {
-                btn.addEventListener('click', ()=> {
-                    
-                    const adsUniqueID = btn.getAttribute('data-id');
-
-                    console.log(adsUniqueID)
-                    
-                    
-                    
-                    
-                        get(ref(database, `favorites/${adsUniqueID}`)).then((snapshot) => {
-
-                            console.log(snapshot)
-                            if (snapshot.exists()) {
-                                remove(ref(database, `favorites/${adsUniqueID}`))
-                                .then(()=> {
-                                alert("Data deleted successfully")
-                                window.location.reload();
-                                })
-                                .catch((error)=> {
-                                alert(error);
-                                });
-                                } else {
-                                    set(push(ref(database, `favorites/${adsUniqueID}`)), {
-                                        // adsID: adsUniqueID,
-                                        userID: userID
+                                                commentBtn.addEventListener('click', ()=> {
+                                                    set(push(ref(database, 'comments/')), {
+                                                        adsID: uniquecommentBtnID,
+                                                        userID: userID,
+                                                        comment: commentInput.value
+                                                        })
+                                                        .then(()=> {
+                                                            alert("Data added successfully")
+                                                            window.location.reload();
+                                                        })
+                                                        .catch((error)=> {
+                                                            alert(error)
+                                                    })
+                                                })
+                                            })
                                         })
-                                        .then(()=> {
-                                            alert("Data added successfully")
-                                            window.location.reload();
-                                        })
-                                        .catch((error)=> {
-                                            alert(error)
-                                    })
-                                }
-                            })
-                        
-                    
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-                    
-                    
-
-
-
-                })
             })
-
-
-
-
-            // modal wil start here
-            const modalContainer = document.querySelector('.modal-container');
-            
-            const commentsModal = document.createElement('div');
-            commentsModal.classList.add('commentsModal');
-           
-            modalContainer.appendChild(commentsModal);
-            const commentBtns = document.querySelectorAll('.commentBtn');
-            const modal = document.querySelector('.modal-overlay');
-            // const closeBtn = document.querySelector('.close-btn');
-            commentBtns.forEach(btn => {
-                btn.addEventListener('click', ()=> {
-                    
-                    modal.classList.add('open-modal');
-                    
-
-                   
-                    
-                    
-                    const uniquecommentBtnID = btn.parentElement.parentElement.getAttribute('data-id');
-                    addCommentsHeader(uniquecommentBtnID, userID);
-
-                    
-
-                     // modalo veikimas kai jis atsidaro
-                     const commentBtn = document.getElementById('commentBtn');
-                     const commentInput = document.getElementById('commentInput');
-
-                    commentBtn.addEventListener('click', ()=> {
-                        
-
-                        set(push(ref(database, 'comments/')), {
-                            adsID: uniquecommentBtnID,
-                            userID: userID,
-                            comment: commentInput.value
-                            })
-                            .then(()=> {
-                                alert("Data added successfully")
-                                window.location.reload();
-                            })
-                            .catch((error)=> {
-                                alert(error)
-                        })
-
-                        
-
-                    })
-
-
-                    
-                })
-            
-            })
-
         })
     });
 
