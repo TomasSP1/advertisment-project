@@ -1,0 +1,366 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+body{
+  
+  width: 100%;
+  background: url("./images/446984.jpg") top right no-repeat;
+  background-attachment: fixed;
+  background-size: 100%;
+  
+  font-family: 'PT Sans', sans-serif;
+  
+  
+}
+h2{
+  padding-top: 1.5rem;
+}
+a{
+  color: #333;
+}
+a:hover{
+  color: #da5767;
+  text-decoration: none;
+}
+
+.card{
+  border: 0.40rem solid #f8f9fa;
+  /* top: 10%; */
+}
+.form-control{
+  background-color: #f8f9fa;
+  padding: 20px;
+  padding: 25px 15px;
+  margin-bottom: 1.3rem;
+}
+
+.form-select {
+  padding: 10px;
+}
+
+
+.form-control:focus {
+  color: #000000;
+  background-color: #ffffff;
+  border: 3px solid #da5767;
+  outline: 0;
+  box-shadow: none;
+}
+
+.btn{
+  padding: 0.6rem 1.2rem;
+  background: #da5767;
+  border: 2px solid #da5767;
+}
+.btn-primary:hover {
+  background-color: #df8c96;
+  border-color: #df8c96;
+  transition: .3s;
+}
+
+.logoutBtnContainer {
+  /* background-color: #333; */
+  height: 50px;
+}
+
+.logoutBtn {
+  float: right;
+  margin: 15px;
+  color: #da5767;
+  font-size: 30px;
+  animation: bounce 2s ease-in-out infinite;
+  
+}
+
+.logoutBtn:hover {
+  cursor: pointer;
+  color:#df8c96;
+  transition: .3s;
+}
+
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.deleteUserBtn, .delCategoryBtn {
+  color: #da5767;
+  text-align: center;
+}
+.deleteUserBtn:hover {
+  cursor: pointer;
+}
+.delCategoryBtn:hover {
+  cursor: pointer;
+}
+
+.userDeleteIcon {
+  text-align: center;
+}
+
+
+.enterCategoryBtn {
+  float: right;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.category-table, .user-table {
+  background: #fff;
+  /* border-radius: 15px; */
+}
+/* .mainAdsFormContainer {
+  margin-bottom: 60px;
+} */
+
+.adsTableContainer {
+  margin-top: 50px;
+}
+
+
+
+img {
+  /* object-fit: cover; */
+  height: 250px;
+  width: 250px;
+}
+
+/* .bandynas {
+  width: 250px !important;
+} */
+
+
+.adsContainer {
+  gap: 10px;
+  margin: 20px;
+}
+
+/* .photo-card {
+  width: 100px;
+} */
+
+.price {
+  float: right;
+  background-color: #da5767;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.photo-title {
+  font-weight: 900;
+}
+
+
+
+
+.adsDelI {
+  position: absolute;
+  color: #494949;
+  font-size: 30px;
+  z-index: 500;
+  top: 5px;
+  right: 5px;
+  padding: 6.5px;
+  display: none;
+}
+
+.fa-square-minus:hover {
+  cursor: pointer;
+  color:#757575;
+  transition: .3s;
+}
+
+.favoriteBtn {
+  position: absolute;
+  color: #494949;
+  font-size: 30px;
+  z-index: 500;
+  top:15px;
+  right: 235px;
+}
+
+.favoriteBtn:hover {
+  cursor: pointer;
+}
+/* ads containerio photo zenkliukai i delete ir 
+update pastaylinimas ir padaromas display none,
+kad is pradziu nerodytu irr ji rodytu tik tie 
+skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
+.adsUpdateI {
+  position: absolute;
+  color: #494949;
+  font-size: 30px;
+  padding: 6.5px;
+  z-index: 500;
+  padding: 5px;
+  right: 6.7px;
+  top: 36px;
+  display: none;
+}
+
+.fa-square-pen:hover {
+  cursor: pointer;
+  color:#757575;
+  transition: .3s;
+}
+
+.deleteAdsBtn, .updateAdsBtn  {
+  display: block;
+}
+
+.commentBtn {
+  position: absolute;
+  color: #494949;
+  font-size: 30px;
+  padding: 6.5px;
+  z-index: 500;
+  padding: 5px;
+  right: 4.8px;
+  top: 65px;
+}
+
+.commentBtn:hover {
+  cursor: pointer;
+  color:#757575;
+  transition: .3s;
+}
+
+/* Panaikina registracijos formoje marginus kad registracijos forma tilptu 100vw */
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.mainAdsFormContainer:nth-child(1) {
+  margin-left: 0 !important;
+}
+
+#nextuploadAdsBtn {
+  display: none;
+}
+
+
+/* modal */
+/* .modal-container {
+  height: 600px;
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  z-index: 999;
+  display: block;
+}
+
+.commentsModal {
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  border: 0.40rem solid #f8f9fa;
+} */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(82, 87, 90, 0.5);
+  display: grid;
+  place-items: center; 
+  /* transition: all 0.3s linear; */
+  visibility: hidden;
+  z-index: -10;
+  
+}
+/* OPEN/CLOSE MODAL */
+.open-modal {
+  visibility: visible;
+  z-index: 999;
+}
+.modal-container {
+  background: #fff;
+  border: 0.40rem solid #f8f9fa;
+  width: 90vw;
+  height: 70vh;
+  max-width: 620px;;
+  text-align: center;
+  display: grid;
+  place-items: center;
+  position: relative;
+  border-radius: 5px;
+}
+.close-btn {
+  position: absolute;
+  top: 1px;
+  right: 5px;
+  font-size: 2rem;
+  background: transparent;
+  border-color: transparent;
+  color: #da5767;
+  cursor: pointer;
+}
+.close-btn:hover {
+  color: #df8c96;
+  transform: scale(1.3);
+}
+
+#comment {
+  margin-top: 40px;
+}
+
+#commentBtn {
+  margin-bottom: 20px;
+}
+
+.commentDelBtn {
+  color: #da5767;
+}
+
+.commentDelBtn:hover {
+  cursor: pointer;
+}
+
+
+
+/* filter btns */
+.filter-btn-container {
+  gap: 10px;
+}
+
+/* .filter-btn {
+  padding: 0.6rem 1.2rem;
+  background: #da5767;
+  border: 2px solid #da5767;
+}
+
+.filter-btn:hover {
+  background-color: #df8c96;
+  border-color: #df8c96;
+  transition: .3s;
+} */
+
+
