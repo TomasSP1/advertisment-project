@@ -9,12 +9,14 @@ function logoutCleanPage() {
     const categoryContainer = document.querySelector('.categoryContainer');
     const mainAdsFormContainer = document.querySelector('.mainAdsFormContainer');
     const adsMainContainer = document.querySelector('.adsContainer');
+    const filterContainerBtns = document.querySelector('.filter-btn-container');
 
     logoutBtnContainer.innerHTML = '';
     userTableContainer.innerHTML = '';
     categoryContainer.innerHTML = '';
     mainAdsFormContainer.innerHTML = '';
     adsMainContainer.innerHTML = '';
+    filterContainerBtns.innerHTML = '';
 };
 
 function cleanRegForm() {

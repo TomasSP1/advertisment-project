@@ -101,10 +101,22 @@ a:hover{
 .deleteUserBtn, .delCategoryBtn {
   color: #da5767;
   text-align: center;
+  font-size: 20px;
 }
 .deleteUserBtn:hover {
   cursor: pointer;
 }
+.banUserBtn {
+  color: #da5767;
+  text-align: center;
+  font-size: 20px;
+}
+.banUserBtn:hover {
+  cursor: pointer;
+  color:#df8c96;
+  transition: .3s;
+}
+
 .delCategoryBtn:hover {
   cursor: pointer;
 }
@@ -346,4 +358,37 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 
 
 
+/* filter btns */
+.filter-btn-container {
+  gap: 10px;
+}
 
+/* .filter-btn {
+  padding: 0.6rem 1.2rem;
+  background: #da5767;
+  border: 2px solid #da5767;
+}
+
+.filter-btn:hover {
+  background-color: #df8c96;
+  border-color: #df8c96;
+  transition: .3s;
+} */
+
+
+.searchContainer {
+  height: 50px;
+  align-items: center;
+  gap: 1px;
+  
+}
+
+#search-name {
+  margin: 0;
+  height: 30px;
+  padding: 23px;
+}
+
+/* #deleteUserBtn {
+  
+} */
