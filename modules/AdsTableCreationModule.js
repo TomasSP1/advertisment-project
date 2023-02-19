@@ -34,7 +34,7 @@ function adsTableCreation(userID) {
 
 function adsDisplay(firebaseData, favoritesData, userID) {
     const adsMainContainer = document.querySelector('.adsContainer');
-
+    console.log(userID)
     for (let data in firebaseData) {
         let isFavorited = !!favoritesData && favoritesData[data + userID];
         let isOwnerOrAdmin = (userID === firebaseData[data].userID || firebaseData.role === 'admin');

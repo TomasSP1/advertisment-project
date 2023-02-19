@@ -392,3 +392,10 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 /* #deleteUserBtn {
   
 } */
+.fa-user-lock {
+  margin-top: 5px;
+}
+.fa-user-large {
+  display: none;
+  margin-top: 5px;
+}

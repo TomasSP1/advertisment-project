@@ -54,14 +54,15 @@ function AddItemToTable(email, role, date, key) {
   let td5 = document.createElement('td');
   td5.classList.add('deleteUserBtn');
   let td6 = document.createElement('td');
-  td6.classList.add('banUserBtn');
+  td6.classList.add('banUserBtn', 'unbanUserBtn');
 
   td1.innerHTML = ++userNr;
   td2.innerHTML = email;
   td3.innerHTML = role;
   td4.innerHTML = date;
   td5.innerHTML = `<i class="fa-solid fa-square-minus"></i>`
-  td6.innerHTML = `<i class="fa-solid fa-ban"></i>`
+  td6.innerHTML = `<i class="fa-solid fa-user-lock" id="userUnLockLogo"></i>
+                   <i class="fa-solid fa-user-large" id="userLockLogo"></i>`
 
   trow.appendChild(td1);
   trow.appendChild(td2);
@@ -120,17 +121,19 @@ function banUserBtnsFunctionality() {
     btn.addEventListener('click', () => {
       const userUniqID = btn.parentElement.getAttribute('data-id');
       
-      // if (bannedUsers.indexOf(bandymas) === -1) {
-      //   bannedUsers.push(bandymas)
-      // }
+     
+      const unbanUserLogo = btn.firstChild;
+      const banUserLogo = btn.lastChild;
+      
+
 
       get(ref(database, 'bannedUsers/' + userUniqID)).then((snapshot) => {
         if (snapshot.exists()) {
           remove(ref(database, 'bannedUsers/' + userUniqID))
             .then(() => {
               console.log('userseris sekmingai atbanintas')
-              // btn.classList.remove('fa-solid');
-              // btn.classList.add('fa-regular');
+              unbanUserLogo.style.display = 'none';
+              banUserLogo.style.display = 'block';
 
             })
             .catch((error) => {
@@ -143,6 +146,8 @@ function banUserBtnsFunctionality() {
             .then(() => {
 
               console.log('userseris sekmingai uzbanintas')
+              banUserLogo.style.display = 'none';
+              unbanUserLogo.style.display = 'block';
 
             })
             .catch((error) => {
