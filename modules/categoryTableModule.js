@@ -26,7 +26,7 @@ function categoryTableHeader() {
             <th class="text-center">Nr</th>
             <th class="categories-input-container"><input type="text" class="form-control category-input" 
             placeholder="Enter category..."><button class="btn btn-primary enterCategoryBtn">Enter</button></th>
-            <th class=userDeleteIcon><i class="fa-solid fa-user-xmark"></i></th>
+            <th class=userDeleteIcon><i class="fa-solid fa-trash"></i></th>
         </thead>
         <tbody class="tbody2"></tbody>
     </table>
@@ -48,11 +48,11 @@ function AddCategoryToTable(category, key) {
   td2.classList.add('text-center');
 
   let td5 = document.createElement('td');
-  td5.classList.add('delCategoryBtn');
+  
 
   td1.innerHTML = ++catNo;
   td2.innerHTML = category;
-  td5.innerHTML = `<i class="fa-solid fa-square-minus"></i>`
+  td5.innerHTML = `<button class="btn btn-primary delCategoryBtn">Delete</button>`
   
   trow.appendChild(td1);
   trow.appendChild(td2);

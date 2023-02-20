@@ -72,7 +72,8 @@ const creatingRegForm = () => {
         set(ref(database, 'Users/' + user.uid), {
             email: email,
             role: 'simple_user',
-            timestamp: `${loginTime}`
+            timestamp: `${loginTime}`,
+            banStatus: false
           });
         // ...
         })

@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
-import { getDatabase, ref, remove, get, set } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+import { getDatabase, ref, remove, get, set, update } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
 import { getAuth, } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,15 +26,15 @@ function userTableHeader() {
                                             <th class="text-center">email</th>
                                             <th class="text-center">role</th>
                                             <th class="text-center">date</th>
-                                            <th class=userDeleteIcon>Delete user</th>
-                                            <th class=userDeleteIcon>Ban user</th>
+                                            <th class=userDeleteIcon><i class="fa-solid fa-user-xmark"></i></th>
+                                            <th class=userDeleteIcon><i class="fa-solid fa-user-lock" id="userUnLockLogo"></i></th>
                                         </thead>
                                         <tbody class="tbody1"></tbody>
                                     </table>
                                 </div>`
 };
 
-function AddItemToTable(email, role, date, key) {
+function AddItemToTable(email, role, date, key, banStatus) {
 
   const userMaintable = document.querySelector('.user-table');
 
@@ -52,17 +52,29 @@ function AddItemToTable(email, role, date, key) {
   let td4 = document.createElement('td');
   td4.classList.add('text-center');
   let td5 = document.createElement('td');
-  td5.classList.add('deleteUserBtn');
+
   let td6 = document.createElement('td');
-  td6.classList.add('banUserBtn', 'unbanUserBtn');
+  td6.classList.add('bannedOrNo');
+
+
 
   td1.innerHTML = ++userNr;
   td2.innerHTML = email;
   td3.innerHTML = role;
   td4.innerHTML = date;
-  td5.innerHTML = `<i class="fa-solid fa-square-minus"></i>`
-  td6.innerHTML = `<i class="fa-solid fa-user-lock" id="userUnLockLogo"></i>
-                   <i class="fa-solid fa-user-large" id="userLockLogo"></i>`
+  td5.innerHTML = `<button class="btn btn-primary deleteUserBtn">Delete</button>`
+  if (banStatus) {
+    td6.innerHTML = `<button class="btn btn-primary userUnblockBtn">UnBlock</button>`
+  } else {
+    td6.innerHTML = `<button class="btn btn-primary userBlockBtn">Block</button>`
+  }
+  
+
+
+
+
+  // <i class="fa-solid fa-user-lock" id="userUnLockLogo"></i>
+
 
   trow.appendChild(td1);
   trow.appendChild(td2);
@@ -74,6 +86,27 @@ function AddItemToTable(email, role, date, key) {
   tbody1.appendChild(trow);
 
   userMaintable.appendChild(tbody1);
+
+  const userLockLogo = document.getElementById('userLockLogo');
+  const userUnLockLogo = document.getElementById('userUnLockLogo');
+  // const uniqueUserID = document
+  console.log(banStatus)
+  get(ref(database, 'bannedUsers/')).then((snapshot) => {
+    const bannedUsersData = snapshot.val();
+    for (let data in bannedUsersData) {
+
+      // if (bannedUsersData[data].userID) {
+      //     console.log('veikia')
+      //     userUnLockLogo.style.display = 'none';
+      //     userLockLogo.style.display = 'block';
+      // }
+
+    }
+
+  })
+
+  const el2 = document.querySelector('[data-id]');
+  console.log(el2)
 };
 
 function AddAllItemsToTable(User) {
@@ -82,7 +115,7 @@ function AddAllItemsToTable(User) {
 
   for (let i in User) {
     if (User[i].role !== 'admin') {
-      AddItemToTable(User[i].email, User[i].role, User[i].timestamp, i);
+      AddItemToTable(User[i].email, User[i].role, User[i].timestamp, i, User[i].banStatus);
     }
   }
 };
@@ -115,48 +148,38 @@ function deleteUserBtnsFunction() {
 };
 
 function banUserBtnsFunctionality() {
-  const banUserBtns = document.querySelectorAll('.banUserBtn');
+  const banUserBtns = document.querySelectorAll('.bannedOrNo');
   // const bannedUsers = [];
   banUserBtns.forEach(btn => {
     btn.addEventListener('click', () => {
+      
       const userUniqID = btn.parentElement.getAttribute('data-id');
       
-     
-      const unbanUserLogo = btn.firstChild;
-      const banUserLogo = btn.lastChild;
-      
-
-
-      get(ref(database, 'bannedUsers/' + userUniqID)).then((snapshot) => {
-        if (snapshot.exists()) {
-          remove(ref(database, 'bannedUsers/' + userUniqID))
-            .then(() => {
-              console.log('userseris sekmingai atbanintas')
-              unbanUserLogo.style.display = 'none';
-              banUserLogo.style.display = 'block';
-
-            })
-            .catch((error) => {
-              alert(error);
-            });
-        } else {
-          set(ref(database, 'bannedUsers/' + userUniqID), {
-            userID: userUniqID
+      get(ref(database, 'Users/' + userUniqID)).then((snapshot) => {
+        const userData = snapshot.val();
+        
+        if (userData.banStatus === false) {
+          update(ref(database, 'Users/' + userUniqID), {
+            banStatus: true
           })
             .then(() => {
-
-              console.log('userseris sekmingai uzbanintas')
-              banUserLogo.style.display = 'none';
-              unbanUserLogo.style.display = 'block';
-
+              btn.innerHTML = `<button class="btn btn-primary userUnblockBtn">UnBlock</button>`
+            })
+            .catch((error) => {
+              alert(error)
+            })
+        } else {
+          update(ref(database, 'Users/' + userUniqID), {
+            banStatus: false
+          })
+            .then(() => {
+              btn.innerHTML = `<button class="btn btn-primary userBlockBtn">Block</button>`
             })
             .catch((error) => {
               alert(error)
             })
         }
       })
-
-
     })
   })
 }

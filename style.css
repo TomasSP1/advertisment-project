@@ -98,10 +98,12 @@ a:hover{
   }
 }
 
-.deleteUserBtn, .delCategoryBtn {
-  color: #da5767;
-  text-align: center;
-  font-size: 20px;
+.deleteUserBtn {
+  padding: 5px;
+}
+
+.delCategoryBtn {
+  padding: 5px;
 }
 .deleteUserBtn:hover {
   cursor: pointer;
@@ -392,10 +394,19 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 /* #deleteUserBtn {
   
 } */
-.fa-user-lock {
+/* .fa-user-lock {
   margin-top: 5px;
 }
 .fa-user-large {
   display: none;
   margin-top: 5px;
+} */
+
+.userBlockBtn {
+  padding: 5px;
+}
+
+.userUnblockBtn {
+  padding: 5px;
+  /* display: none; */
 }
