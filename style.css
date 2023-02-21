@@ -30,6 +30,10 @@ a:hover{
   text-decoration: none;
 }
 
+th {
+  font-size: 20px;
+}
+
 .card{
   border: 0.40rem solid #f8f9fa;
   /* top: 10%; */
@@ -129,7 +133,7 @@ a:hover{
 
 
 .enterCategoryBtn {
-  float: right;
+  margin-left: 4px;
 }
 
 .flex-container {
@@ -389,6 +393,7 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
   margin: 0;
   height: 30px;
   padding: 23px;
+  margin-right: 3px;
 }
 
 /* #deleteUserBtn {
@@ -410,3 +415,8 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
   padding: 5px;
   /* display: none; */
 }
+
+/* registracijos formas mygtukas */
+/* .register-btn {
+  float: right !important;
+} */

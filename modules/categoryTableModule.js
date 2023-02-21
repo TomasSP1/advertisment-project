@@ -24,14 +24,20 @@ function categoryTableHeader() {
     <table class="table table-bordered table-hover category-table">
         <thead>
             <th class="text-center">Nr</th>
-            <th class="categories-input-container"><input type="text" class="form-control category-input" 
-            placeholder="Enter category..."><button class="btn btn-primary enterCategoryBtn">Enter</button></th>
+            <th class="d-flex flex-row categories-input-container">
+              <input type="text" class="form-control category-input" id="search-name" placeholder="enter Category">
+              <button class="btn btn-primary enterCategoryBtn">Enter</button>
+            </th>
             <th class=userDeleteIcon><i class="fa-solid fa-trash"></i></th>
         </thead>
         <tbody class="tbody2"></tbody>
     </table>
     </div>`
 }
+
+
+{/* <th class="categories-input-container"><input type="text" class="form-control category-input" 
+            placeholder="Enter category..."><button class="btn btn-primary enterCategoryBtn">Enter</button></th> */}
 
 function AddCategoryToTable(category, key) {
 
@@ -40,6 +46,7 @@ function AddCategoryToTable(category, key) {
   const tbody2 = document.querySelector('.tbody2');
   let trow = document.createElement('tr');
   trow.setAttribute('data-id', key);
+  
 
   let td1 = document.createElement('td');
   td1.classList.add('text-center');
@@ -48,6 +55,7 @@ function AddCategoryToTable(category, key) {
   td2.classList.add('text-center');
 
   let td5 = document.createElement('td');
+  td5.classList.add('d-flex', 'justify-content-center', 'align-items-center')
   
 
   td1.innerHTML = ++catNo;
@@ -80,6 +88,7 @@ function addCategoryBtnFunction() {
     })
     .then(()=> {
       alert("Data added successfully")
+      window.location.reload();
     })
     .catch((error)=> {
       alert(error)
@@ -91,7 +100,8 @@ function delCategoryBtnsFunction() {
   const delCategoryBtns = document.querySelectorAll('.delCategoryBtn');
   delCategoryBtns.forEach(btn => {
     btn.addEventListener('click', ()=> {
-      const uniqueBtnID = btn.parentElement.getAttribute('data-id');
+      const uniqueBtnID = btn.parentElement.parentElement.getAttribute('data-id');
+      console.log(uniqueBtnID)
       get(ref(database, `categories/${uniqueBtnID}`)).then((snapshot) => {
         if (snapshot.exists()) {
             remove(ref(database, `categories/${uniqueBtnID}`))
