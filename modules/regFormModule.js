@@ -27,10 +27,10 @@ const creatingRegForm = () => {
                 <div class="card-body py-md-4">
                     <form>
                         <div class="form-group">
-                            <input type="email" class="form-control" id="loginEmail" placeholder="Email">
+                            <input type="email" class="form-control" id="loginEmail" placeholder="Email" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Password" />
                         </div>
                         <div class="d-flex flex-row align-items-center justify-content-between">
                             <button class="btn btn-primary login-btn">Login</button>
@@ -45,10 +45,10 @@ const creatingRegForm = () => {
                 <div class="card-body py-md-4">
                     <form>
                         <div class="form-group">
-                            <input type="email" class="form-control" id="regEmail" placeholder="Email">
+                            <input type="email" class="form-control" id="regEmail" placeholder="Email" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="regPassword" placeholder="Password">
+                            <input type="password" class="form-control" id="regPassword" placeholder="Password" />
                         </div>
                         <div class="d-flex flex-row-reverse align-items-center justify-content-between">
                             <button class="btn btn-primary register-btn">Create Account</button>
@@ -64,38 +64,39 @@ const creatingRegForm = () => {
         const user_email = document.getElementById("loginEmail").value;
         const user_pass = document.getElementById("loginPassword").value;
 
+        if (user_email.length < 6) {
+            alert('user email should be atleast 6 symbols')
+        } else if (user_pass.length < 6) {
+            alert('user password should be atleast 6 symbols')
+        } else {
+            get(ref(database, 'Users/')).then((userSnapshot) => {
+                const userData = userSnapshot.val();
+                for (let data in userData) {
+                    if (user_email === userData[data].email && userData[data].banStatus === true) {
+                        alert('jus esate uzbanintas')
 
-        get(ref(database, 'Users/')).then((userSnapshot) => {
-            const userData = userSnapshot.val();
-            for (let data in userData) {
-                if (user_email === userData[data].email && userData[data].banStatus === true) {
-                    alert('jus esate uzbanintas')
-                    
-                } 
-               
-                
-                if (user_email === userData[data].email && userData[data].banStatus === false) {
-                    signInWithEmailAndPassword(auth, user_email, user_pass)
-                        .then((userCredential) => {
-                            console.log(userCredential.user.email)
-
-                        })
-                        .catch((error) => {
-                            const errorCode = error.code;
-                            const errorMessage = error.message;
-                            // ...
-                        });
-                } 
-                // else if (user_email !== userData[data].email) {
-                //     alert('nera paskyros');
-                //     break;
-                // }
-            }
-
-        })
+                    }
 
 
+                    if (user_email === userData[data].email && userData[data].banStatus === false) {
+                        signInWithEmailAndPassword(auth, user_email, user_pass)
+                            .then((userCredential) => {
+                                console.log(userCredential.user.email)
 
+                            })
+                            .catch((error) => {
+                                const errorCode = error.code;
+                                const errorMessage = error.message;
+                                // ...
+                            });
+                    }
+                    // else if (user_email !== userData[data].email) {
+                    //     alert('nera paskyros');
+                    //     break;
+                    // }
+                }
+            })
+        }
     };
 
     const registerUserFunction = (e) => {
@@ -104,31 +105,36 @@ const creatingRegForm = () => {
 
         const email = document.getElementById('regEmail').value;
         console.log(email)
-        
+
         const passwd = document.getElementById('regPassword').value;
         console.log(passwd)
+        if (email.length < 6) {
+            alert('user email should be atleast 6 symbols')
+        } else if (passwd.length < 6) {
+            alert('user password should be atleast 6 symbols')
+        } else {
+            createUserWithEmailAndPassword(auth, email, passwd)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    console.log(`new user created ${user}`)
 
-        createUserWithEmailAndPassword(auth, email, passwd)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                console.log(`new user created ${user}`)
-
-                const loginTime = new Date();
-                set(ref(database, 'Users/' + user.uid), {
-                    email: email,
-                    role: 'simple_user',
-                    timestamp: `${loginTime}`,
-                    banStatus: false
+                    const loginTime = new Date();
+                    set(ref(database, 'Users/' + user.uid), {
+                        email: email,
+                        role: 'simple_user',
+                        timestamp: `${loginTime}`,
+                        banStatus: false
+                    });
+                    // ...
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // ..
+                    console.log(errorMessage)
                 });
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // ..
-                console.log(errorMessage)
-            });
+        }
     };
 
     const loginBtn = document.querySelector('.login-btn');

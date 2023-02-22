@@ -196,29 +196,29 @@ img {
 
 
 .adsDelI {
-  position: absolute;
-  color: #494949;
+  /* position: absolute; */
+  color: #fff;
   font-size: 30px;
   z-index: 500;
-  top: 5px;
-  right: 5px;
+  /* top: 5px;
+  right: 5px; */
   padding: 6.5px;
   display: none;
 }
 
 .fa-square-minus:hover {
   cursor: pointer;
-  color:#757575;
+  color:#df8c96;
   transition: .3s;
 }
 
 .favoriteBtn {
-  position: absolute;
-  color: #494949;
+  /* position: absolute; */
+  color: #FFDC00;
   font-size: 30px;
   z-index: 500;
-  top:15px;
-  right: 235px;
+  /* top:15px;
+  right: 235px; */
 }
 
 .favoriteBtn:hover {
@@ -229,20 +229,20 @@ update pastaylinimas ir padaromas display none,
 kad is pradziu nerodytu irr ji rodytu tik tie 
 skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 .adsUpdateI {
-  position: absolute;
-  color: #494949;
+  /* position: absolute; */
+  color: #fff;
   font-size: 30px;
   padding: 6.5px;
   z-index: 500;
   padding: 5px;
-  right: 6.7px;
-  top: 36px;
+  /* right: 6.7px;
+  top: 36px; */
   display: none;
 }
 
 .fa-square-pen:hover {
   cursor: pointer;
-  color:#757575;
+  color:#df8c96;
   transition: .3s;
 }
 
@@ -251,19 +251,19 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 }
 
 .commentBtn {
-  position: absolute;
-  color: #494949;
+  /* position: absolute; */
+  color: #fff;
   font-size: 30px;
   padding: 6.5px;
   z-index: 500;
   padding: 5px;
-  right: 4.8px;
-  top: 65px;
+  /* right: 4.8px;
+  top: 65px; */
 }
 
 .commentBtn:hover {
   cursor: pointer;
-  color:#757575;
+  color:#df8c96;
   transition: .3s;
 }
 
@@ -382,14 +382,15 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 } */
 
 
-.searchContainer {
+/* .searchContainer {
   height: 50px;
   align-items: center;
   gap: 1px;
   
-}
+} */
 
-#search-name {
+
+#searchInput, #search-name {
   margin: 0;
   height: 30px;
   padding: 23px;
@@ -420,3 +421,21 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 /* .register-btn {
   float: right !important;
 } */
+
+.fa-solid-container {
+  background-color: #494949;
+  width: 38px;
+  position: absolute;
+  top:1px;
+  right: 1px;
+  border-radius: 0 0 0 5px
+}
+
+.favorite-logo-container {
+  background-color: #494949;
+  width: 35px;
+  position: absolute;
+  top:1px;
+  left: 1px;
+  border-radius: 0 0 5px 0;
+}
