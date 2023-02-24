@@ -5,7 +5,8 @@ import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 
-import { firebaseConfig } from "../firebase.js"
+import { firebaseConfig } from "../firebase.js";
+import { universalModalFunctionality } from "./universalModalModule.js";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -31,10 +32,10 @@ function adsDisplay(firebaseData, favoritesData, userID) {
     const adsMainContainer = document.querySelector('.adsContainer');
     console.log(userID)
     for (let data in firebaseData) {
-        
+
         let isFavorited = !!favoritesData && favoritesData[data + userID];
-        let isOwnerOrAdmin = (userID === firebaseData[data].userID || 
-        userID === 'tBmyoY8kdXUpDuoz5vnS1q1SsIe2');
+        let isOwnerOrAdmin = (userID === firebaseData[data].userID ||
+            userID === 'tBmyoY8kdXUpDuoz5vnS1q1SsIe2');
 
         adsMainContainer.innerHTML += `
             <div class="card photo-card" data-id=${data} style="width: 18rem;">
@@ -84,7 +85,7 @@ function favoriteBtnsFunctionality(userID) {
 
                         })
                         .catch((error) => {
-                            alert(error);
+                            console.log(error);
                         });
                 } else {
                     set(ref(database, 'favorites/' + adsUniqueID + userID), {
@@ -98,7 +99,7 @@ function favoriteBtnsFunctionality(userID) {
 
                         })
                         .catch((error) => {
-                            alert(error)
+                            console.log(error);
                         })
                 }
             })
@@ -127,7 +128,6 @@ function filterBtnsDisplay(firebaseData, userID) {
 
         filterBtnsFunctionality(firebaseData, userID);
         searchBtnFunctionality(firebaseData, userID)
-
 
     })
 }
@@ -164,7 +164,7 @@ function searchBtnFunctionality(firebaseData, userID) {
     const searchInfoContainer = document.createElement('div');
     searchInfoContainer.classList.add('d-flex', 'flex-row', 'searchContainer');
     searchInfoContainer.innerHTML =
-        `<input type="text" class="form-control" 
+                `<input type="text" class="form-control" 
                   id="searchInput" placeholder="search by the name">
                  <button class="btn btn-primary" id="searchAdsBtn">Search</button>`
 
@@ -179,7 +179,7 @@ function searchBtnFunctionality(firebaseData, userID) {
         const searchInput = document.getElementById('searchInput');
 
         if (searchInput.value.length < 3) {
-            alert('Please enter more than 3 symbols')
+            universalModalFunctionality('Please enter more than 3 symbols');
         } else {
             get(ref(database, 'favorites/')).then((favsnapshot) => {
                 const newFavoriteAdsData = favsnapshot.val();
@@ -202,27 +202,22 @@ function searchBtnFunctionality(firebaseData, userID) {
 function addCommentsHeader(adsID, userID) {
 
     const modalContainer = document.querySelector('.modal-container');
-
-
-
     modalContainer.innerHTML = `
+            <button class="close-btn"><i class="fa-solid fa-rectangle-xmark"></i></button>
             <input type="text" class="form-control" id="commentInput" placeholder="Write your comment here...">
             <button class="btn btn-primary" id="commentBtn">Comment</button>
-            <button class="close-btn"><i class="fa-solid fa-rectangle-xmark"></i></button>
-            <table class="table">
+            <table class="table commentsTable">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">UserID</th>
-                    <th scope="col">Comment</th>
-                    <th scope="col">Delete</th>
+                    <th scope="col" class="modal-th-num"><p class="d-flex justify-content-center">#</p></th>
+                    <th scope="col" class="user-email modal-th-user-email"><p class="d-flex justify-content-center">User email</p></th>
+                    <th scope="col" class="modal-th-user-comment"><p class="d-flex justify-content-center">Comment</p></th>
+                    <th scope="col" class="modal-th-user-del-logo><p class="d-flex justify-content-center">Delete</p></th>
                 </tr>
             </thead>
             <tbody class="commentsTbody"></tbody>
             </table>`
 
-
-    // const commentBtns = document.querySelectorAll('.commentBtn');
     const modal = document.querySelector('.modal-overlay');
     const closeBtn = document.querySelector('.close-btn');
 
@@ -233,11 +228,17 @@ function addCommentsHeader(adsID, userID) {
 
     // kad bet kur paspaudus uzsidarytu modalas
     window.addEventListener('click', function (e) {
-
         if (e.target === modal) {
             modal.classList.remove('open-modal');
         }
     })
+
+    // closing modal by pressing ESC key
+    document.addEventListener('keydown', evt => {
+        if (evt.key === 'Escape') {
+            modal.classList.remove('open-modal');
+        }
+    });
 
 
     // komentaru atvaizdavimas pagal unikalu skelbima
@@ -257,13 +258,14 @@ function addCommentsHeader(adsID, userID) {
                     for (let c in commentsData) {
 
                         if (commentsData[c].adsID === adsID) {
+                            let emailExistOrNo = !!commentsData[c].userEmail;
                             if (commentsData[c].userID === userID || userData.role === 'admin' || adsData.userID === userID) {
                                 commentsTbody.innerHTML += `
                                 <tr data-id=${c}>
-                                    <th scope="row">${++commentNum}</th>
-                                    <td>${commentsData[c].userID}</td>
-                                    <td>${commentsData[c].comment}</td>
-                                    <td class="commentDelBtn"><i class="fa-solid fa-square-minus"></i></td>
+                                    <th class="text-center modal-th-num" scope="row">${++commentNum}</th>
+                                    <td class="text-center modal-th-user-email user-email" >${emailExistOrNo ? commentsData[c].userEmail : 'Deleted user'}</td>
+                                    <td class="text-center modal-th-user-comment" >${commentsData[c].comment}</td>
+                                    <td class="commentDelBtn modal-th-user-del-logo text-center"><i class="fa-solid fa-square-minus"></i></td>
                                 </tr>`
 
                                 delComment();
@@ -284,16 +286,16 @@ function addCommentsHeader(adsID, userID) {
         })
 
         .catch((error) => {
-            alert(error);
+            console.log(error);
         });
 }
 
 // komentaru trinimo funkcija
 function delComment() {
     const commentDelBtns = document.querySelectorAll('.commentDelBtn');
-    console.log(commentDelBtns)
+
     commentDelBtns.forEach(btn => {
-        console.log(btn)
+
         btn.addEventListener('click', () => {
             console.log('spaudziu')
             const uniqueAdsBtnID = btn.parentElement.getAttribute('data-id');
@@ -302,11 +304,11 @@ function delComment() {
                 if (snapshot.exists()) {
                     remove(ref(database, `comments/${uniqueAdsBtnID}`))
                         .then(() => {
-                            alert("Data deleted successfully")
+                            universalModalFunctionality('Data deleted successfully');
                             window.location.reload();
                         })
                         .catch((error) => {
-                            alert(error);
+                            console.log(error);
                         });
                 } else {
                     console.log("No data available")
@@ -335,26 +337,76 @@ function modalComentFunctionality(userID) {
             modal.classList.add('open-modal');
 
             const uniquecommentBtnID = btn.parentElement.parentElement.parentElement.getAttribute('data-id');
-            
+            console.log(uniquecommentBtnID)
             addCommentsHeader(uniquecommentBtnID, userID);
 
             // modalo veikimas kai jis atsidaro
             const commentBtn = document.getElementById('commentBtn');
+            console.log(commentBtn, 'spaudziu mygtuka')
             const commentInput = document.getElementById('commentInput');
 
             commentBtn.addEventListener('click', () => {
-                set(push(ref(database, 'comments/')), {
-                    adsID: uniquecommentBtnID,
-                    userID: userID,
-                    comment: commentInput.value
+                console.log('veikia')
+                get(ref(database, 'Users/' + userID)).then((userSnapshot) => {
+                    const userData = userSnapshot.val();
+                    set(push(ref(database, 'comments/')), {
+                        adsID: uniquecommentBtnID,
+                        userID: userID,
+                        userEmail: userData.email,
+                        comment: commentInput.value
+                    })
+                        .then(() => {
+                            alert("Data added successfully")
+                            // addCommentsHeader(uniquecommentBtnID, userID);
+                            let commentNum = 0;
+
+                            const commentsTbody = document.querySelector('.commentsTbody');
+                            commentsTbody.innerHTML = '';
+
+                            get(ref(database, `comments/`))
+                                .then((snapshot) => {
+                                    const commentsData = snapshot.val();
+                                    get(ref(database, 'Users/' + userID)).then((userSnapshot) => {
+                                        const userData = userSnapshot.val();
+                                        get(ref(database, 'ads/' + uniquecommentBtnID)).then((adsUserSnapshot) => {
+                                            const adsData = adsUserSnapshot.val();
+
+                                            for (let c in commentsData) {
+
+                                                if (commentsData[c].adsID === uniquecommentBtnID) {
+                                                    let emailExistOrNo = !!commentsData[c].userEmail;
+                                                    if (commentsData[c].userID === userID || userData.role === 'admin' || adsData.userID === userID) {
+                                                        commentsTbody.innerHTML += `
+                                <tr data-id=${c}>
+                                    <th class="text-center" scope="row">${++commentNum}</th>
+                                    <td class="text-center" >${emailExistOrNo ? commentsData[c].userEmail : 'Deleted user'}</td>
+                                    <td class="text-center" >${commentsData[c].comment}</td>
+                                    <td class="commentDelBtn text-center"><i class="fa-solid fa-square-minus"></i></td>
+                                </tr>`
+
+                                                        delComment();
+                                                    } else {
+                                                        commentsTbody.innerHTML += `
+                                <tr>
+                                    <th scope="row">${++commentNum}</th>
+                                    <td>${commentsData[c].userID}</td>
+                                    <td>${commentsData[c].comment}</td>
+                                    <td></td>
+                                </tr>`
+                                                    }
+
+                                                }
+                                            }
+                                        })
+                                    })
+                                })
+
+                            // window.location.reload();
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
                 })
-                    .then(() => {
-                        alert("Data added successfully")
-                        window.location.reload();
-                    })
-                    .catch((error) => {
-                        alert(error)
-                    })
             })
         })
     })
@@ -371,11 +423,11 @@ function deleteAdsBtnFunctionality() {
                 if (snapshot.exists()) {
                     remove(ref(database, `ads/${uniqueAdsBtnID}`))
                         .then(() => {
-                            alert("Data deleted successfully")
+                            universalModalFunctionality('Your ad deleted successfully!');
                             window.location.reload();
                         })
                         .catch((error) => {
-                            alert(error);
+                            console.log(error);
                         });
                 } else {
                     console.log("No data available")
@@ -421,11 +473,11 @@ function updateAdsBtnsFunctionality() {
                         picture: adsPictureInput.value
                     })
                         .then(() => {
-                            alert("Data updated successfully");
+                            universalModalFunctionality('Your ad updated succsessfully!');
                             window.location.reload();
                         })
                         .catch((error) => {
-                            alert(error)
+                            console.log(error);
                         })
                 })
             })

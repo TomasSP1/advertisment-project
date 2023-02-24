@@ -28,7 +28,7 @@ function userRoleIdentifikcation() {
         return snapshot.val().role;
     })
     .catch((error) => {
-        console.log('Cant read role')
+        console.log(error)
     })
 
     return userRole

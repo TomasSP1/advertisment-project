@@ -34,6 +34,22 @@ th {
   font-size: 20px;
 }
 
+.main-container {
+  width: 100%;
+}
+
+/* header */
+
+.userHello {
+  position: absolute;
+  top: 10px;
+  display: flex;
+  gap: 10px;
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
 .card{
   border: 0.40rem solid #f8f9fa;
   /* top: 10%; */
@@ -56,6 +72,10 @@ th {
   border: 3px solid #da5767;
   outline: 0;
   box-shadow: none;
+}
+
+.ads-reg-form {
+  margin: 0 !important;
 }
 
 .btn{
@@ -154,6 +174,10 @@ th {
   margin-bottom: 60px;
 } */
 
+.user-table {
+  width: 100%;
+}
+
 .adsTableContainer {
   margin-top: 50px;
 }
@@ -208,7 +232,7 @@ img {
 
 .fa-square-minus:hover {
   cursor: pointer;
-  color:#df8c96;
+  color:#D5D5D5;
   transition: .3s;
 }
 
@@ -223,6 +247,8 @@ img {
 
 .favoriteBtn:hover {
   cursor: pointer;
+  color: #ffeb6a;
+  transition: .3s;
 }
 /* ads containerio photo zenkliukai i delete ir 
 update pastaylinimas ir padaromas display none,
@@ -242,7 +268,7 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 
 .fa-square-pen:hover {
   cursor: pointer;
-  color:#df8c96;
+  color:#D5D5D5;
   transition: .3s;
 }
 
@@ -263,7 +289,7 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 
 .commentBtn:hover {
   cursor: pointer;
-  color:#df8c96;
+  color:#D5D5D5;
   transition: .3s;
 }
 
@@ -282,24 +308,7 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
 }
 
 
-/* modal */
-/* .modal-container {
-  height: 600px;
-  width: 400px;
-  position: absolute;
-  top: 50%;
-  right: 50%;
-  z-index: 999;
-  display: block;
-}
-
-.commentsModal {
-  height: 100%;
-  width: 100%;
-  background-color: #ffffff;
-  border: 0.40rem solid #f8f9fa;
-} */
-
+/* OPEN/CLOSE MODAL */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -309,12 +318,9 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
   background: rgba(82, 87, 90, 0.5);
   display: grid;
   place-items: center; 
-  /* transition: all 0.3s linear; */
   visibility: hidden;
   z-index: -10;
-  
 }
-/* OPEN/CLOSE MODAL */
 .open-modal {
   visibility: visible;
   z-index: 999;
@@ -325,30 +331,49 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
   width: 90vw;
   height: 70vh;
   max-width: 620px;;
-  text-align: center;
-  display: grid;
-  place-items: center;
-  position: relative;
   border-radius: 5px;
+  overflow-y: scroll;
 }
 .close-btn {
-  position: absolute;
-  top: 1px;
-  right: 5px;
-  font-size: 2rem;
+  float: right;
+  margin-right: 5px;
+  margin-top: 5px;
+  font-size: 1rem;
   background: transparent;
   border-color: transparent;
   color: #da5767;
   cursor: pointer;
+  z-index: 500;
 }
 .close-btn:hover {
   color: #df8c96;
   transform: scale(1.3);
 }
 
-#comment {
-  margin-top: 40px;
+.modal-th-num {
+  width: 10%;
 }
+.modal-th-user-email {
+  width: 20%;
+}
+.modal-th-user-comment {
+  width: 50%;
+}
+.modal-th-user-del-logo {
+  width: 10%;
+}
+
+#commentBtn {
+  float: right;
+  margin-right: 15px;
+  padding: 5px;
+}
+
+#commentInput {
+  margin-top: 40px;
+  padding: 10px;
+}
+
 
 #commentBtn {
   margin-bottom: 20px;
@@ -362,6 +387,57 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
   cursor: pointer;
 }
 
+/* universal Modal */
+.universal-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(82, 87, 90, 0.5);
+  display: grid;
+  place-items: center; 
+  visibility: hidden;
+  z-index: -10;
+}
+
+.open-universal-modal {
+  visibility: visible;
+  z-index: 999;
+}
+.universal-modal-container {
+  background: #fff;
+  border: 0.40rem solid #f8f9fa;
+  width: 30vw;
+  height: 20vh;
+  max-width: 620px;;
+  border-radius: 5px;
+}
+.universal-module-div {
+  width: 100%;
+  height: 70%;
+}
+
+.universal-module-div p {
+  font-size: 20px;
+  text-align: center;
+}
+
+.close-btn-modal {
+  float: right;
+  margin-right: 10px;
+  margin-top: 3px;
+  font-size: 1rem;
+  background: transparent;
+  border-color: transparent;
+  color: #da5767;
+  cursor: pointer;
+  z-index: 500;
+}
+.close-btn-modal:hover {
+  color: #df8c96;
+  transform: scale(1.3);
+}
 
 
 /* filter btns */
@@ -369,25 +445,6 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
   gap: 10px;
 }
 
-/* .filter-btn {
-  padding: 0.6rem 1.2rem;
-  background: #da5767;
-  border: 2px solid #da5767;
-}
-
-.filter-btn:hover {
-  background-color: #df8c96;
-  border-color: #df8c96;
-  transition: .3s;
-} */
-
-
-/* .searchContainer {
-  height: 50px;
-  align-items: center;
-  gap: 1px;
-  
-} */
 
 
 #searchInput, #search-name {
@@ -397,30 +454,21 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
   margin-right: 3px;
 }
 
-/* #deleteUserBtn {
-  
-} */
-/* .fa-user-lock {
-  margin-top: 5px;
-}
-.fa-user-large {
-  display: none;
-  margin-top: 5px;
-} */
-
 .userBlockBtn {
   padding: 5px;
 }
 
 .userUnblockBtn {
   padding: 5px;
-  /* display: none; */
+  background: #3D9970;
+  border: 2px solid #3D9970;
 }
 
-/* registracijos formas mygtukas */
-/* .register-btn {
-  float: right !important;
-} */
+.userUnblockBtn:hover {
+  background: #5ac092;
+  border: 2px solid #5ac092;
+}
+
 
 .fa-solid-container {
   background-color: #494949;
@@ -438,4 +486,44 @@ skelbimai kurie turi clase deleteAdsBtn arba updateAdsBtn */
   top:1px;
   left: 1px;
   border-radius: 0 0 5px 0;
+}
+
+/* changes the scrollbar to look more aesthetic */
+::-webkit-scrollbar {
+  width: 13px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #494949;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border: 0;
+}
+
+@media screen and (max-width: 565px) {
+  .user-date{
+    display: none;
+  }
+  #search-name {
+    padding: 0;
+    padding-left: 5px;
+    font-size: 12px;
+  }
+  .enterCategoryBtn {
+    padding: 5px;
+  }
+  .user-email {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .user-role{
+    display: none;
+  }
 }

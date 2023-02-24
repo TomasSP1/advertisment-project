@@ -10,6 +10,7 @@ import {
 
 
 import { firebaseConfig } from "../firebase.js"
+import { universalModalFunctionality } from "../modules/universalModalModule.js"
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -21,7 +22,7 @@ const creatingRegForm = () => {
     const mainLoginFormContainer = document.querySelector('.mainLoginFormContainer');
     mainLoginFormContainer.innerHTML =
         `<div class="row justify-content-center">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card">
                 <h2 class="card-title text-center">Login form</h2>
                 <div class="card-body py-md-4">
@@ -39,7 +40,7 @@ const creatingRegForm = () => {
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card">
                 <h2 class="card-title text-center">Registration form</h2>
                 <div class="card-body py-md-4">
@@ -65,16 +66,15 @@ const creatingRegForm = () => {
         const user_pass = document.getElementById("loginPassword").value;
 
         if (user_email.length < 6) {
-            alert('user email should be atleast 6 symbols')
+            universalModalFunctionality('User email should be atleast 6 symbols');
         } else if (user_pass.length < 6) {
-            alert('user password should be atleast 6 symbols')
+            universalModalFunctionality('User password should be atleast 6 symbols');
         } else {
             get(ref(database, 'Users/')).then((userSnapshot) => {
                 const userData = userSnapshot.val();
                 for (let data in userData) {
                     if (user_email === userData[data].email && userData[data].banStatus === true) {
-                        alert('jus esate uzbanintas')
-
+                        universalModalFunctionality('Your account is blocked');
                     }
 
 
@@ -85,9 +85,8 @@ const creatingRegForm = () => {
 
                             })
                             .catch((error) => {
-                                const errorCode = error.code;
                                 const errorMessage = error.message;
-                                // ...
+                                console.log(errorMessage)
                             });
                     }
                     // else if (user_email !== userData[data].email) {
@@ -101,23 +100,21 @@ const creatingRegForm = () => {
 
     const registerUserFunction = (e) => {
         e.preventDefault();
-        console.log('paspaudziau')
-
+        
         const email = document.getElementById('regEmail').value;
-        console.log(email)
-
         const passwd = document.getElementById('regPassword').value;
-        console.log(passwd)
+        
         if (email.length < 6) {
-            alert('user email should be atleast 6 symbols')
+            universalModalFunctionality('User email should be atleast 6 symbols');
         } else if (passwd.length < 6) {
-            alert('user password should be atleast 6 symbols')
+            universalModalFunctionality('User password should be atleast 6 symbols');
         } else {
             createUserWithEmailAndPassword(auth, email, passwd)
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
                     console.log(`new user created ${user}`)
+                    universalModalFunctionality('Your account was created!');
 
                     const loginTime = new Date();
                     set(ref(database, 'Users/' + user.uid), {
@@ -129,9 +126,7 @@ const creatingRegForm = () => {
                     // ...
                 })
                 .catch((error) => {
-                    const errorCode = error.code;
                     const errorMessage = error.message;
-                    // ..
                     console.log(errorMessage)
                 });
         }

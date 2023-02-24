@@ -3,13 +3,14 @@ function cleanAllTables() {
     mainLoginFormContainer.innerHTML = '';
 }
 
-function logoutCleanPage() {
+function headerCleanPage() {
     const logoutBtnContainer = document.querySelector('.logoutBtnContainer');
     const userTableContainer = document.querySelector('.userTableContainer');
     const categoryContainer = document.querySelector('.categoryContainer');
     const mainAdsFormContainer = document.querySelector('.mainAdsFormContainer');
     const adsMainContainer = document.querySelector('.adsContainer');
     const filterContainerBtns = document.querySelector('.filter-btn-container');
+    const userHello = document.querySelector('.userHello')
 
     logoutBtnContainer.innerHTML = '';
     userTableContainer.innerHTML = '';
@@ -17,6 +18,7 @@ function logoutCleanPage() {
     mainAdsFormContainer.innerHTML = '';
     adsMainContainer.innerHTML = '';
     filterContainerBtns.innerHTML = '';
+    userHello.innerHTML = '';
 };
 
 function cleanRegForm() {
@@ -24,4 +26,4 @@ function cleanRegForm() {
     mainLoginFormContainer.innerHTML = '';
 }
 
-export{logoutCleanPage, cleanAllTables, cleanRegForm}
+export{headerCleanPage, cleanAllTables, cleanRegForm}

@@ -5,7 +5,8 @@ import { getAuth, } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-aut
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 
-import { firebaseConfig } from "../firebase.js"
+import { firebaseConfig } from "../firebase.js";
+import { universalModalFunctionality } from "./universalModalModule.js";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -16,8 +17,8 @@ const auth = getAuth();
 function creatingAdsForm() {
     const mainAdsFormContainer = document.querySelector('.mainAdsFormContainer');
     mainAdsFormContainer.innerHTML = `
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-5">
+        <div class="row d-flex justify-content-center ads-reg-form">
+            <div class="col-md-8">
                 <div class="card">
                     <h2 class="card-title text-center">Ads form</h2>
                     <div class="card-body py-md-4">
@@ -81,15 +82,15 @@ function creatingAdsForm() {
         e.preventDefault();
 
         if (adsNameInput.value.length < 3) {
-            alert('name more than 3 symbols')
+            universalModalFunctionality('Ads name should be more than 3 symbols');
         } else if (adsSelectInput.value === 'Select your category') {
-            alert('please select category')
+            universalModalFunctionality('Please select a catagory');
         } else if (adsTextareaInput.value.length < 10) {
-            alert('description should be atleast 10 symbols')
+            universalModalFunctionality('Description should be atleast 10 symbols');
         } else if (adsPriceInput.value <= 0) {
-            alert('price should be more than 0')
+            universalModalFunctionality('Price should be more than 0');
         } else if (adsPictureInput.value.length < 10) {
-            alert('insert HTML photo link')
+            universalModalFunctionality('Please insert HTML photo link');
         } else {
             const user = auth.currentUser;
             console.log(adsPictureInput.value)
@@ -106,7 +107,7 @@ function creatingAdsForm() {
                     window.location.reload();
                 })
                 .catch((error) => {
-                    alert(error)
+                    console.log(error);
                 })
         }
     });

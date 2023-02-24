@@ -5,7 +5,8 @@ import { getAuth, deleteUser} from "https://www.gstatic.com/firebasejs/9.16.0/fi
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 
-import { firebaseConfig } from "../firebase.js"
+import { firebaseConfig } from "../firebase.js";
+import { universalModalFunctionality } from "./universalModalModule.js";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -18,19 +19,22 @@ let userNr = 0;
 function userTableHeader() {
   const userTableContainer = document.querySelector('.userTableContainer');
 
-  userTableContainer.innerHTML = `<div class="container table-container my-5 card">
-                                    <h2>Users:</h2>
-                                    <table class="table table-bordered table-hover user-table">
-                                        <thead>
-                                            <th class="text-center">Nr</th>
-                                            <th class="text-center">email</th>
-                                            <th class="text-center">role</th>
-                                            <th class="text-center">date</th>
-                                            <th class=userDeleteIcon><i class="fa-solid fa-user-lock" id="userUnLockLogo"></i></th>
-                                        </thead>
-                                        <tbody class="tbody1"></tbody>
-                                    </table>
-                                </div>`
+  userTableContainer.innerHTML = `
+            <div class="container table-container my-5 card">
+              
+                  <h2>Users:</h2>
+                  <table class="table table-bordered table-hover user-table">
+                      <thead>
+                          <th class="text-center">Nr</th>
+                          <th class="text-center">email</th>
+                          <th class="text-center user-role">role</th>
+                          <th class="text-center user-date">date</th>
+                          <th class=userDeleteIcon><i class="fa-solid fa-user-lock" id="userUnLockLogo"></i></th>
+                      </thead>
+                      <tbody class="tbody1"></tbody>
+                  </table>
+                
+            </div>`
 };
 
 function AddItemToTable(email, role, date, key, banStatus) {
@@ -47,9 +51,9 @@ function AddItemToTable(email, role, date, key, banStatus) {
   let td2 = document.createElement('td');
   td2.classList.add('text-center');
   let td3 = document.createElement('td');
-  td3.classList.add('text-center');
+  td3.classList.add('text-center', 'user-role');
   let td4 = document.createElement('td');
-  td4.classList.add('text-center');
+  td4.classList.add('text-center', 'user-date');
   // let td5 = document.createElement('td');
 
   let td6 = document.createElement('td');
@@ -144,20 +148,22 @@ function banUserBtnsFunctionality() {
             banStatus: true
           })
             .then(() => {
-              btn.innerHTML = `<button class="btn btn-primary userUnblockBtn">UnBlock</button>`
+              btn.innerHTML = `<button class="btn btn-primary userUnblockBtn">UnBlock</button>`;
+              universalModalFunctionality('User blocked successfully!');
             })
             .catch((error) => {
-              alert(error)
+              console.log(error);
             })
         } else {
           update(ref(database, 'Users/' + userUniqID), {
             banStatus: false
           })
             .then(() => {
-              btn.innerHTML = `<button class="btn btn-primary userBlockBtn">Block</button>`
+              btn.innerHTML = `<button class="btn btn-primary userBlockBtn">Block</button>`;
+              universalModalFunctionality('User unblocked successfully!');
             })
             .catch((error) => {
-              alert(error)
+              console.log(error);
             })
         }
       })

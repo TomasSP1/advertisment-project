@@ -20,13 +20,14 @@ import {firebaseConfig} from "./firebase.js"
 
 
 import {creatingRegForm} from "./modules/regFormModule.js";
-import {creatingLogoutBtn} from "./modules/logoutBtnModule.js"       
+// import {creatingLogoutBtn} from "./modules/logoutBtnModule.js"       
 import {userTable} from "./modules/userTableModule.js";
 import {categoryTable} from "./modules/categoryTableModule.js";
-import {logoutCleanPage, cleanAllTables, cleanRegForm} from "./modules/cleanPageModule.js";
+import {headerCleanPage, cleanAllTables, cleanRegForm} from "./modules/cleanPageModule.js";
 import {userRoleIdentifikcation} from "./modules/roleIdentificationModule.js";
 import {creatingAdsForm} from "./modules/ADSregForm.js";
 import {adsTableCreation} from "./modules/AdsTableCreationModule.js";
+import { headerFuncionality } from "./modules/headerModule.js";
 
 
 
@@ -44,7 +45,7 @@ onAuthStateChanged(auth, (user) => {
     
   if (user) {
         
-        logoutCleanPage();
+        headerCleanPage();
 
         adsTableCreation(user.uid);
         
@@ -53,28 +54,22 @@ onAuthStateChanged(auth, (user) => {
             if (data === 'admin') {
                 console.log('admin log in')
                 cleanRegForm();
-                creatingLogoutBtn();
+                headerFuncionality(user.uid);
                 userTable();
                 categoryTable();
                 creatingAdsForm();
-                // adsContainers();
 
             } else {
                 console.log('simple user log in');
                 cleanRegForm();
                 cleanAllTables();
-                creatingLogoutBtn();
+                headerFuncionality(user.uid);
                 creatingAdsForm();
-                
-    
-                
-                
             }
         });
     } else {
-        logoutCleanPage();
+        headerCleanPage();
         creatingRegForm();
-        
     }      
 });
 
