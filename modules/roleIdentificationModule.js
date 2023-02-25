@@ -13,10 +13,10 @@ import {firebaseConfig} from "../firebase.js"
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
-// userio statuso patikrinimas
-// const user = auth.currentUser;
 
+// function to get user unique ID
 function getuseruid() {
+    
     let user = auth.currentUser
     return user.uid
 }

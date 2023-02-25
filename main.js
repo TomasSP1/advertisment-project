@@ -1,26 +1,15 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
-import { getDatabase, 
-        set, 
-        ref, 
-        update,
-        child,
-        get,
-        remove,
-        onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
-import { getAuth, 
-        createUserWithEmailAndPassword, 
-        signInWithEmailAndPassword, 
-        signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 
 import {firebaseConfig} from "./firebase.js"
 
-
-import {creatingRegForm} from "./modules/regFormModule.js";
-// import {creatingLogoutBtn} from "./modules/logoutBtnModule.js"       
+// IMPORTING OTHER MODULES
+// import {creatingRegForm} from "./modules/regFormModule.js";     
 import {userTable} from "./modules/userTableModule.js";
 import {categoryTable} from "./modules/categoryTableModule.js";
 import {headerCleanPage, cleanAllTables, cleanRegForm} from "./modules/cleanPageModule.js";
@@ -28,6 +17,7 @@ import {userRoleIdentifikcation} from "./modules/roleIdentificationModule.js";
 import {creatingAdsForm} from "./modules/ADSregForm.js";
 import {adsTableCreation} from "./modules/AdsTableCreationModule.js";
 import { headerFuncionality } from "./modules/headerModule.js";
+import { carouselRender } from "./modules/firstPageCarouselModule.js";
 
 
 
@@ -36,13 +26,15 @@ import { headerFuncionality } from "./modules/headerModule.js";
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
-// userio statuso patikrinimas
+// checking user status
 const user = auth.currentUser;
 
 
 
 onAuthStateChanged(auth, (user) => {
-    
+
+  
+
   if (user) {
         
         headerCleanPage();
@@ -69,7 +61,8 @@ onAuthStateChanged(auth, (user) => {
         });
     } else {
         headerCleanPage();
-        creatingRegForm();
+        carouselRender();
+        // creatingRegForm();
     }      
 });
 

@@ -1,13 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
 import { getDatabase, set, ref, get } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
-import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
+import {getAuth, createUserWithEmailAndPassword, 
+signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
 
 import { firebaseConfig } from "../firebase.js"
 import { universalModalFunctionality } from "../modules/universalModalModule.js"
@@ -17,7 +13,7 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-
+// Function responsible for rendering Login and Registration form
 const creatingRegForm = () => {
     const mainLoginFormContainer = document.querySelector('.mainLoginFormContainer');
     mainLoginFormContainer.innerHTML =
@@ -65,6 +61,7 @@ const creatingRegForm = () => {
         const user_email = document.getElementById("loginEmail").value;
         const user_pass = document.getElementById("loginPassword").value;
 
+        // checking if inputs are nor empty
         if (user_email.length < 6) {
             universalModalFunctionality('User email should be atleast 6 symbols');
         } else if (user_pass.length < 6) {
@@ -73,11 +70,12 @@ const creatingRegForm = () => {
             get(ref(database, 'Users/')).then((userSnapshot) => {
                 const userData = userSnapshot.val();
                 for (let data in userData) {
+                    // checking if account is not blocked
                     if (user_email === userData[data].email && userData[data].banStatus === true) {
                         universalModalFunctionality('Your account is blocked');
                     }
 
-
+                    // if account is not blocked he can login in
                     if (user_email === userData[data].email && userData[data].banStatus === false) {
                         signInWithEmailAndPassword(auth, user_email, user_pass)
                             .then((userCredential) => {

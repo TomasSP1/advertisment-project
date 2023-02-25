@@ -1,3 +1,6 @@
+// Functions responsible for clearing containers after operations
+// CLeaning old functions infromation and preparing BODY, HEADER for new functions information
+
 function cleanAllTables() {
     const mainLoginFormContainer = document.querySelector('.mainLoginFormContainer');
     mainLoginFormContainer.innerHTML = '';

@@ -15,10 +15,11 @@ const auth = getAuth();
 
 
 
-// functions responsible for display of categories in table
+// functions responsible for rendering categories in table
 let catNo = 0;
-
+// Function responsible for rendering category table panel for admin
 function categoryTableHeader() {
+
   const categoryContainer = document.querySelector('.categoryContainer');
   categoryContainer.innerHTML = `
           <div class="container table-container my-5 card">

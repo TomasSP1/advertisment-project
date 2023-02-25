@@ -1,20 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
-import { getDatabase, 
-        set, 
-        ref, 
-        update,
-        child,
-        get,
-        remove,
-        onValue } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
-import { getAuth, 
-        createUserWithEmailAndPassword, 
-        signInWithEmailAndPassword, 
-        signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
+import { getDatabase, ref, get,} from "https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js";
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
 
 import {firebaseConfig} from "../firebase.js"
 
@@ -25,12 +14,13 @@ const auth = getAuth();
 // userio statuso patikrinimas
 const user = auth.currentUser;
 
+// Main header rendering function
 function headerFuncionality(userID) {
     creatingUserHello(userID);
     creatingLogoutBtn(); 
 }
 
-
+// Header logout button function
 const creatingLogoutBtn = ()=> {
     const logoutBtnContainer = document.querySelector('.logoutBtnContainer');
     logoutBtnContainer.innerHTML = `<i class="fa-solid fa-right-from-bracket logoutBtn"></i>`;
@@ -54,6 +44,7 @@ const creatingLogoutBtn = ()=> {
     logOutBtn.addEventListener('click', logOutBtnFunction);
 };
 
+// Hello massage and status function
 const creatingUserHello = (userID)=> {
     const userHello = document.querySelector('.userHello');
     
@@ -65,8 +56,6 @@ const creatingUserHello = (userID)=> {
         <p>Hello ${userName} !!!</p>
         <p>role: ${userRole}.</p>`
     });
-
-
 }
 
 export { headerFuncionality }

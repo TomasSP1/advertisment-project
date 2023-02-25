@@ -14,13 +14,13 @@ function universalModalFunctionality(text) {
     universalModal.classList.add('open-universal-modal');
     const closeBtn = document.querySelector('.close-btn-modal');
 
-
+    // closing modal by pressing X
     closeBtn.addEventListener('click', () => {
         universalModal.classList.remove('open-universal-modal');
     })
    
 
-    // kad bet kur paspaudus uzsidarytu modalas
+    // closing modal by pressing anywhere on teh screen/document
     window.addEventListener('click', function (e) {
 
         if (e.target === universalModal) {

@@ -12,9 +12,10 @@ import { universalModalFunctionality } from "./universalModalModule.js";
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
-// const user = auth.currentUser;
 
+// Main function responsible for rendering Ads registration form
 function creatingAdsForm() {
+
     const mainAdsFormContainer = document.querySelector('.mainAdsFormContainer');
     mainAdsFormContainer.innerHTML = `
         <div class="row d-flex justify-content-center ads-reg-form">
@@ -24,7 +25,7 @@ function creatingAdsForm() {
                     <div class="card-body py-md-4">
                         <form>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="ads-name" placeholder="ADS name">
+                                <input type="text" class="form-control" id="ads-name" placeholder="Enter advertisement name">
                             </div>
                             <div class="form-group">
                                 <select class="form-select form-control" id="form-selection" aria-label="Default select example">
@@ -33,7 +34,7 @@ function creatingAdsForm() {
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control" id="ads-about" rows="5"
-                                placeholder="ADS about..."></textarea>
+                                placeholder="Advertisement description"></textarea>
                             </div>
                             <div class="form-group">
                                 <input type="number" class="form-control" id="price" placeholder="Price">
@@ -67,22 +68,17 @@ function creatingAdsForm() {
     });
 
     const adsNameInput = document.getElementById('ads-name');
-
     const adsSelectInput = document.getElementById('form-selection');
     const adsTextareaInput = document.getElementById('ads-about');
     const adsPriceInput = document.getElementById('price');
     const adsPictureInput = document.getElementById('picture-name');
     const uploadAdsBtn = document.getElementById('uploadAdsBtn');
 
-
-
-
-
     uploadAdsBtn.addEventListener('click', (e) => {
         e.preventDefault();
-
+        // checking if input fields are not emty
         if (adsNameInput.value.length < 3) {
-            universalModalFunctionality('Ads name should be more than 3 symbols');
+            universalModalFunctionality('Advertisement name should be more than 3 symbols');
         } else if (adsSelectInput.value === 'Select your category') {
             universalModalFunctionality('Please select a catagory');
         } else if (adsTextareaInput.value.length < 10) {
@@ -92,8 +88,8 @@ function creatingAdsForm() {
         } else if (adsPictureInput.value.length < 10) {
             universalModalFunctionality('Please insert HTML photo link');
         } else {
+            // if inputs not empty uploading information to database
             const user = auth.currentUser;
-            console.log(adsPictureInput.value)
             set(push(ref(database, 'ads/')), {
                 name: adsNameInput.value,
                 category: adsSelectInput.value,
@@ -103,7 +99,8 @@ function creatingAdsForm() {
                 userID: user.uid
             })
                 .then(() => {
-                    alert("Data added successfully")
+                    // after uploading info getting modal message
+                    universalModalFunctionality('Advertisement uploaded successfully')
                     window.location.reload();
                 })
                 .catch((error) => {

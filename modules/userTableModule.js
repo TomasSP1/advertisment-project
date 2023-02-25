@@ -16,6 +16,7 @@ const auth = getAuth();
 // functions responsible for display of registered Users in table
 let userNr = 0;
 
+// Function responsible for rendering user table panel for admin
 function userTableHeader() {
   const userTableContainer = document.querySelector('.userTableContainer');
 
@@ -93,8 +94,8 @@ function AddAllItemsToTable(User) {
     }
   }
 };
-
 // end of functions responsible for display of registered Users in table
+
 
 // function deleteUserBtnsFunction() {
 //   // selecting information delete button
@@ -124,13 +125,11 @@ function AddAllItemsToTable(User) {
 //         } else {
 //           console.log("No data available")
 //         }
-//       })
-      
+//       })  
 //     })
-    
-
 //   })
 // };
+
 
 function banUserBtnsFunctionality() {
   const banUserBtns = document.querySelectorAll('.bannedOrNo');
@@ -171,6 +170,7 @@ function banUserBtnsFunctionality() {
   })
 }
 
+// main user Table function
 function userTable() {
   get(ref(database, 'Users/')).then((snapshot) => {
     const userData = snapshot.val();
