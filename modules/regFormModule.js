@@ -36,7 +36,7 @@ const creatingRegForm = () => {
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 reg-form">
             <div class="card">
                 <h2 class="card-title text-center">Registration form</h2>
                 <div class="card-body py-md-4">

@@ -528,7 +528,11 @@ th p {
     background-size: 350%;
   }
 }
-
+@media screen and (max-width: 768px) {
+  .reg-form {
+    margin-top: 10px;
+  }
+}
 
 @media screen and (max-width: 565px) {
   .user-date{
@@ -552,3 +556,5 @@ th p {
     display: none;
   }
 }
+
+reg-form
