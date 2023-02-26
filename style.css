@@ -29,14 +29,14 @@
 
 /* all the global css styling */
 
-body{
+body {
   width: 100vw;
   background: url("./images/446984.jpg") top right no-repeat;
   background-attachment: fixed;
   background-size: 112%;
 }
 
-h2{
+h2 {
   padding-top: 1.5rem;
 }
 
@@ -49,16 +49,19 @@ header {
   width: 100%;
 }
 
-p, button, h2 {
+p,
+button,
+h2 {
   font-family: 'Poppins', sans-serif;
 }
 
 /* global form css styling */
 
-.card{
+.card {
   border: 0.40rem solid var(--white);
 }
-.form-control{
+
+.form-control {
   background-color: var(--white);
   padding: 20px;
   padding: 25px 15px;
@@ -76,11 +79,13 @@ p, button, h2 {
   outline: 0;
   box-shadow: none;
 }
-.btn{
+
+.btn {
   padding: 0.6rem 1.2rem;
   background: var(--red);
   border: 2px solid var(--red);
 }
+
 .btn-primary:hover {
   background-color: var(--hoverRed);
   border-color: var(--hoverRed);
@@ -113,7 +118,7 @@ p, button, h2 {
   color: var(--red);
   font-size: 30px;
   animation: bounce 2s ease-in-out infinite;
-  
+
 }
 
 .logoutBtn:hover {
@@ -127,9 +132,11 @@ p, button, h2 {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.5);
   }
+
   100% {
     transform: scale(1);
   }
@@ -167,7 +174,7 @@ p, button, h2 {
 
 .banUserBtn:hover {
   cursor: pointer;
-  color:var(--hoverRed);
+  color: var(--hoverRed);
   transition: .3s;
 }
 
@@ -255,7 +262,8 @@ ads that have class deleteAdsBtn or updateAdsBtn */
   transition: .3s;
 }
 
-.deleteAdsBtn, .updateAdsBtn  {
+.deleteAdsBtn,
+.updateAdsBtn {
   display: block;
 }
 
@@ -277,7 +285,7 @@ ads that have class deleteAdsBtn or updateAdsBtn */
   background-color: var(--darkGrey);
   width: 38px;
   position: absolute;
-  top:1px;
+  top: 1px;
   right: 1px;
   border-radius: 0 0 0 5px
 }
@@ -286,14 +294,15 @@ ads that have class deleteAdsBtn or updateAdsBtn */
   background-color: var(--darkGrey);
   width: 35px;
   position: absolute;
-  top:1px;
+  top: 1px;
   left: 1px;
   border-radius: 0 0 5px 0;
 }
 
 /* STYLING TABLES */
 
-.category-table, .user-table {
+.category-table,
+.user-table {
   background: var(--white);
 }
 
@@ -306,7 +315,7 @@ ads that have class deleteAdsBtn or updateAdsBtn */
 }
 
 th p {
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 15px;
 }
 
@@ -337,23 +346,27 @@ th p {
   height: 100%;
   background: var(--modalsOverlayColor);
   display: grid;
-  place-items: center; 
+  place-items: center;
   visibility: hidden;
   z-index: -10;
 }
+
 .open-modal {
   visibility: visible;
   z-index: 999;
 }
+
 .modal-container {
   background: var(--white);
   border: 0.40rem solid var(--modalsBorderColor);
   width: 90vw;
   height: 70vh;
-  max-width: 620px;;
+  max-width: 620px;
+  ;
   border-radius: 5px;
   overflow-y: scroll;
 }
+
 .close-btn {
   float: right;
   margin-right: 5px;
@@ -365,6 +378,7 @@ th p {
   cursor: pointer;
   z-index: 500;
 }
+
 .close-btn:hover {
   color: var(--hoverRed);
   transform: scale(1.3);
@@ -373,12 +387,15 @@ th p {
 .modal-th-num {
   width: 5%;
 }
+
 .modal-th-user-email {
   width: 20%;
 }
+
 .modal-th-user-comment {
   width: 65%;
 }
+
 .modal-th-user-del-logo {
   width: 10%;
 }
@@ -417,7 +434,7 @@ th p {
   height: 100%;
   background: var(--modalsOverlayColor);
   display: grid;
-  place-items: center; 
+  place-items: center;
   visibility: hidden;
   z-index: -10;
 }
@@ -426,14 +443,17 @@ th p {
   visibility: visible;
   z-index: 999;
 }
+
 .universal-modal-container {
   background: var(--white);
   border: 0.40rem solid var(--modalsBorderColor);
   width: 30vw;
   height: 20vh;
-  max-width: 620px;;
+  max-width: 620px;
+  ;
   border-radius: 5px;
 }
+
 .universal-module-div {
   width: 100%;
   height: 70%;
@@ -455,6 +475,7 @@ th p {
   cursor: pointer;
   z-index: 500;
 }
+
 .close-btn-modal:hover {
   color: var(--hoverRed);
   transform: scale(1.3);
@@ -467,7 +488,8 @@ th p {
   gap: 10px;
 }
 
-#searchInput, #search-name {
+#searchInput,
+#search-name {
   margin: 0;
   height: 30px;
   padding: 23px;
@@ -504,7 +526,7 @@ th p {
 
 .userUnblockBtn:hover {
   background: var(--unblockColorHover);
-  border: 2px solid  var(--unblockColorHover);
+  border: 2px solid var(--unblockColorHover);
 }
 
 
@@ -533,33 +555,55 @@ th p {
     background-size: 350%;
   }
 }
+
 @media screen and (max-width: 768px) {
   .reg-form {
     margin-top: 10px;
   }
+
   .advertismentName {
     display: block;
     text-align: center;
     padding-bottom: 20px;
   }
-  
+
+  .advertismentName h5 {
+    font-size: 1.5em;
+    margin: 10px 0 0 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    animation: animtext 4s steps(80, end);
+    transition: all cubic-bezier(0.1, 0.7, 1.0, 0.1);
+  }
+  @keyframes animtext { 
+    from {
+        width: 0;
+       transition: all 2s ease-in-out;
+    } 
+  }
+
 }
 
 @media screen and (max-width: 565px) {
-  .user-date{
+  .user-date {
     display: none;
   }
+
   #search-name {
     padding: 0;
     padding-left: 5px;
     font-size: 12px;
   }
+
   .enterCategoryBtn {
     padding: 5px;
   }
+
   .user-email {
     display: none;
   }
+
   .universal-modal-container {
     width: 60vw;
     height: 50vh;
@@ -567,7 +611,7 @@ th p {
 }
 
 @media screen and (max-width: 400px) {
-  .user-role{
+  .user-role {
     display: none;
   }
 }
