@@ -1,6 +1,8 @@
 import { creatingRegForm } from "./regFormModule.js";
 
 function firstPageRender() {
+    const headerContainer = document.querySelector('.headerContainer');
+    headerContainer.style.display = 'none';
     const carouselContainer = document.querySelector('.carousel-container');
     carouselContainer.innerHTML = `
     <div class=advertismentName>
@@ -136,6 +138,7 @@ function firstPageRender() {
     const firstEntryBtn = document.querySelector('.firstEntryBtn');
     firstEntryBtn.addEventListener('click', () => {
         carouselContainer.style.display = 'none';
+        headerContainer.style.display = 'block';
         creatingRegForm();
     })
 }

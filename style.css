@@ -560,6 +560,10 @@ th p {
   .user-email {
     display: none;
   }
+  .universal-modal-container {
+    width: 60vw;
+    height: 50vh;
+  }
 }
 
 @media screen and (max-width: 400px) {
