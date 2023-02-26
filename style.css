@@ -485,6 +485,10 @@ th p {
   margin-top: 30px;
 }
 
+.advertismentName {
+  display: none;
+}
+
 
 /* USER BLOCK TABLE STYLING */
 
@@ -533,6 +537,12 @@ th p {
   .reg-form {
     margin-top: 10px;
   }
+  .advertismentName {
+    display: block;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+  
 }
 
 @media screen and (max-width: 565px) {

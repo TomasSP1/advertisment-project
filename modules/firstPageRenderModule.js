@@ -3,6 +3,9 @@ import { creatingRegForm } from "./regFormModule.js";
 function firstPageRender() {
     const carouselContainer = document.querySelector('.carousel-container');
     carouselContainer.innerHTML = `
+    <div class=advertismentName>
+        <h5>Nr. 1 advertisment page in the world!</h5>
+    </div>
     <div 
     id="carouselExampleIndicators"
     class="carousel slide"
