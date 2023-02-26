@@ -109,7 +109,7 @@ p, button, h2 {
 
 .logoutBtn {
   float: right;
-  margin: 15px;
+  margin: 15px 20px 15px 15px;
   color: var(--red);
   font-size: 30px;
   animation: bounce 2s ease-in-out infinite;
