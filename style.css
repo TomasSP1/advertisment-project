@@ -30,7 +30,7 @@
 /* all the global css styling */
 
 body{
-  width: 100%;
+  width: 100vw;
   background: url("./images/446984.jpg") top right no-repeat;
   background-attachment: fixed;
   background-size: 112%;
@@ -46,6 +46,7 @@ th {
 
 header {
   height: 60px;
+  width: 100%;
 }
 
 p, button, h2 {
@@ -551,10 +552,8 @@ th p {
   }
 }
 
-@media screen and (max-width: 376px) {
+@media screen and (max-width: 400px) {
   .user-role{
     display: none;
   }
 }
-
-reg-form
