@@ -21,7 +21,7 @@ function creatingAdsForm() {
         <div class="row d-flex justify-content-center ads-reg-form">
             <div class="col-md-8">
                 <div class="card">
-                    <h2 class="card-title text-center">Ads form</h2>
+                    <h2 class="card-title text-center">Advertisment registration form</h2>
                     <div class="card-body py-md-4">
                         <form>
                             <div class="form-group">
@@ -100,7 +100,7 @@ function creatingAdsForm() {
             })
                 .then(() => {
                     // after uploading info getting modal message
-                    universalModalFunctionality('Advertisement uploaded successfully')
+                    // universalModalFunctionality('Advertisement uploaded successfully');
                     window.location.reload();
                 })
                 .catch((error) => {

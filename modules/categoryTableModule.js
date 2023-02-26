@@ -91,7 +91,7 @@ function addCategoryBtnFunction() {
       category: categoryInput
     })
       .then(() => {
-        universalModalFunctionality('Catgegory added successfully');
+        // universalModalFunctionality('Catgegory added successfully');
         window.location.reload();
       })
       .catch((error) => {
@@ -112,7 +112,7 @@ function delCategoryBtnsFunction() {
         if (snapshot.exists()) {
           remove(ref(database, `categories/${uniqueBtnID}`))
             .then(() => {
-              universalModalFunctionality('Catgegory deleted successfully');
+              // universalModalFunctionality('Catgegory deleted successfully');
               window.location.reload();
             })
             .catch((error) => {

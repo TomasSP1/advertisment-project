@@ -429,10 +429,10 @@ function modalCommentsRender(userID, uniquecommentBtnID) {
                             } else {
                                 commentsTbody.innerHTML += `
                                 <tr>
-                                    <th scope="row">${++commentNum}</th>
-                                    <td>${commentsData[c].userID}</td>
-                                    <td>${commentsData[c].comment}</td>
-                                    <td></td>
+                                    <th class="text-center" scope="row">${++commentNum}</th>
+                                    <td class="text-center">${emailExistOrNo ? commentsData[c].userEmail : 'Deleted user'}</td>
+                                    <td class="text-center">${commentsData[c].comment}</td>
+                                    <td class="text-center"></td>
                                 </tr>`
                             }
                         }

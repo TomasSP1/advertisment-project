@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+
 /* main variables for css */
 
 :root {
@@ -31,7 +33,7 @@ body{
   width: 100%;
   background: url("./images/446984.jpg") top right no-repeat;
   background-attachment: fixed;
-  background-size: 100%;
+  background-size: 112%;
 }
 
 h2{
@@ -44,6 +46,10 @@ th {
 
 header {
   height: 60px;
+}
+
+p, button, h2 {
+  font-family: 'Poppins', sans-serif;
 }
 
 /* global form css styling */
@@ -182,6 +188,7 @@ img {
   /* object-fit: cover; */
   height: 250px;
   width: 250px;
+  object-fit: cover;
 }
 
 .adsContainer {
@@ -252,14 +259,11 @@ ads that have class deleteAdsBtn or updateAdsBtn */
 }
 
 .commentBtn {
-  /* position: absolute; */
   color: var(--white);
   font-size: 30px;
   padding: 6.5px;
   z-index: 500;
   padding: 5px;
-  /* right: 4.8px;
-  top: 65px; */
 }
 
 .commentBtn:hover {
@@ -298,6 +302,11 @@ ads that have class deleteAdsBtn or updateAdsBtn */
 
 .adsTableContainer {
   margin-top: 50px;
+}
+
+th p {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 15px;
 }
 
 
@@ -468,7 +477,11 @@ ads that have class deleteAdsBtn or updateAdsBtn */
 
 .carousel-img {
   height: 400px;
-  object-fit: cover;
+  filter: brightness(.3);
+}
+
+.firstEntryBtn {
+  margin-top: 30px;
 }
 
 
@@ -509,6 +522,13 @@ ads that have class deleteAdsBtn or updateAdsBtn */
 }
 
 /* RESPONSIVE DESIGN */
+@media screen and (max-width: 1450px) {
+  body {
+    background: url("./images/446984.jpg") no repeat;
+    background-size: 350%;
+  }
+}
+
 
 @media screen and (max-width: 565px) {
   .user-date{

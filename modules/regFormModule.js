@@ -86,8 +86,9 @@ const creatingRegForm = () => {
                                 const errorMessage = error.message;
                                 console.log(errorMessage)
                             });
-                    }
-                    // else if (user_email !== userData[data].email) {
+                    } 
+                        
+                    // if (user_email !== userData[data].email) {
                     //     alert('nera paskyros');
                     //     break;
                     // }
@@ -125,6 +126,7 @@ const creatingRegForm = () => {
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
+                    universalModalFunctionality(errorMessage);
                     console.log(errorMessage)
                 });
         }

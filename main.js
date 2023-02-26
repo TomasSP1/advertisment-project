@@ -17,7 +17,7 @@ import {userRoleIdentifikcation} from "./modules/roleIdentificationModule.js";
 import {creatingAdsForm} from "./modules/ADSregForm.js";
 import {adsTableCreation} from "./modules/AdsTableCreationModule.js";
 import { headerFuncionality } from "./modules/headerModule.js";
-import { carouselRender } from "./modules/firstPageCarouselModule.js";
+import { firstPageRender } from "./modules/firstPageRenderModule.js";
 
 
 
@@ -61,7 +61,7 @@ onAuthStateChanged(auth, (user) => {
         });
     } else {
         headerCleanPage();
-        carouselRender();
+        firstPageRender();
         // creatingRegForm();
     }      
 });

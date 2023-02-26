@@ -24,6 +24,7 @@ function headerFuncionality(userID) {
 const creatingLogoutBtn = ()=> {
     const logoutBtnContainer = document.querySelector('.logoutBtnContainer');
     logoutBtnContainer.innerHTML = `<i class="fa-solid fa-right-from-bracket logoutBtn"></i>`;
+    const carouselContainer = document.querySelector('.carousel-container');
 
     const logOutBtnFunction = (e) => {
       e.preventDefault();
@@ -31,6 +32,7 @@ const creatingLogoutBtn = ()=> {
       signOut(auth)
         .then(() => {
           // Sign-out successful.
+          carouselContainer.style.display = 'block';
           console.log("Signed out");
         })
         .catch((error) => {
@@ -53,7 +55,7 @@ const creatingUserHello = (userID)=> {
         let userName = userData.email.replace(/@.*$/, "");
         let userRole = userData.role.replace("_", " ")
         userHello.innerHTML = `
-        <p>Hello ${userName} !!!</p>
+        <p>Hello ${userName}!</p>
         <p>role: ${userRole}.</p>`
     });
 }
