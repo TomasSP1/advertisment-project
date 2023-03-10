@@ -331,7 +331,7 @@ function deleteAdsBtnFunctionality() {
 
     delAdsBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const uniqueAdsBtnID = btn.parentElement.parentElement.getAttribute('data-id');
+            const uniqueAdsBtnID = btn.parentElement.parentElement.parentElement.getAttribute('data-id');
             get(ref(database, `ads/${uniqueAdsBtnID}`)).then((snapshot) => {
                 if (snapshot.exists()) {
                     remove(ref(database, `ads/${uniqueAdsBtnID}`))
